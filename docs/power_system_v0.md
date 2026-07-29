@@ -21,8 +21,8 @@ flowchart TB
 
     SW1 --> DIST["12V母線（WAGO 221）<br/>TVS: SMBJ18CA<br/>C: 2200uF/35V"]
 
-    DIST --> ESTOP["E-STOP（NC接点）<br/>※サーボ系フィードのみ遮断"]
-    DIST --> PMP["12Vポンプ系フィード"]
+    DIST --> ESTOP["E-STOP（NC接点）<br/>※下流の全アクチュエータを遮断"]
+    ESTOP --> PMP["12Vポンプ系フィード"]
 
     ESTOP --> P1["PTC 2.5A"] --> BKA["LM2596 #A<br/>出力 5.8V"]
     ESTOP --> P2["PTC 2.5A"] --> BKB["LM2596 #B<br/>出力 6.0V"]
