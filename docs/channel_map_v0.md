@@ -1,4 +1,4 @@
-# チャンネル表 v0（頭部フェーズ）
+﻿# チャンネル表 v0（頭部フェーズ）
 
 構成: Mega=運動・安全ノード／ESP32=味覚・湿潤系ノード／PC=AI・音声・統合。
 サーボはPCA9685 ×2（**在庫表に無いため要発注**）。電源グループは power_system_v0.md と対応。
@@ -30,15 +30,12 @@
 | 4 | eyebrowLeft | MG90S | 90° | ／ | |
 | 5 | forheadRight | MG90S | 90° | ／ | |
 | 6 | forheadLeft | MG90S | 90° | ／ | |
-| 7 | eyeLeftUD | MG90S | 90° | ／ | 公式機構は左右連動2サーボの可能性→STL確認 |
-| 8 | eyeLeftLR | MG90S | 90° | ／ | 〃 |
-| 9 | eyeRightUD | MG90S | 90° | ／ | 連動実装なら空きへ |
-| 10 | eyeRightLR | MG90S | 90° | ／ | 〃 |
-| 11 | eyelidLeftUpper | MG90S | 90° | ／ | |
-| 12 | eyelidLeftLower | MG90S | 90° | ／ | |
-| 13 | eyelidRightUpper | MG90S | 90° | ／ | |
-| 14 | eyelidRightLower | MG90S | 90° | ／ | |
-| 15 | tasteSensorLift | MG90S | 90° | ／ | 味覚プレート昇降 |
+| 7 | eyeX | MG90S | 90° | ／ | 両目左右・共通軸（i2Eyesは左右連動） |
+| 8 | eyeY | MG90S | 90° | ／ | 両目上下・共通軸 |
+| 9 | eyelidLeft | MG90S | 90° | ／ | |
+| 10 | eyelidRight | MG90S | 90° | ／ | |
+| 11 | tasteSensorLift | MG90S | 90° | ／ | 味覚プレート昇降 |
+| 12-15 | 予備 | — | — | — | 独立視線化(v2)・唾液演出弁などの増設枠 |
 
 ## PCA9685 #2（0x41）— 首・顎系／電源レールB（6.0V→将来5A級降圧）
 
