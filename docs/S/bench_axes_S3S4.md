@@ -5,7 +5,7 @@
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: S（安全・制御・知覚。頭部外ベンチ機能）
 変更履歴:
-- v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、throatGate／tasteSensorLift／ペリスタポンプ／漏水・満水・トレー検知／味覚JSONスキーマ／ESP32ノード構成と、固定安全ロジックのうちS系該当分を分離して新規作成。
+- v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、throatGate／tasteSensorLift／ペリスタポンプ／漏水・満水・トレー検知／味覚JSONスキーマ／ESP32ノード構成と、固定安全ロジックのうちS系該当分を分離して新規作成。§6で「担当文書未確定」としていた残りの内容は `docs/S/i2c_address_map.md`・`docs/S/safety_logic.md`・`docs/S/mcu_pinmap.md`・`docs/R/reserved_axes.md` へ移送し、§6を移送先を示す表へ更新した。
 
 **頭部外ベンチ。頭部の表に混ぜない。** throatGateとtasteSensorLiftは2026年時点では電気的に頭部のPCA9685基板（PCA9685 #1 ch11、PCA9685 #2 ch3）に接続されるが、系統としてはS系（頭部外ベンチ機能）として扱い、`docs/L/channel_map_L2.md`（L系）には含めない。
 
@@ -42,7 +42,7 @@
 
 ## 4. 固定安全ロジック（S系該当分・ベンチ関連のみ）
 
-**AI・LLMに委譲しない層。**以下はベンチ（漏水・満水・トレー・ポンプ）に直接関わる条件のみを掲載する。E-STOP・ハートビート・通信断・過熱・BMS低電圧・待機タイムアウト等の頭部全体に関わる安全ロジックは、本書の対象外であり、担当文書が未確定（§6参照）。
+**AI・LLMに委譲しない層。**以下はベンチ（漏水・満水・トレー・ポンプ）に直接関わる条件のみを掲載する。E-STOP・ハートビート・通信断・過熱・BMS低電圧・待機タイムアウト等の頭部全体に関わる安全ロジックは、本書の対象外。`docs/S/safety_logic.md` を参照（§6参照）。
 
 | # | 条件 | 検知 | 固定動作 | 担当層 |
 |---|---|---|---|---|
@@ -84,30 +84,29 @@ I²Cアドレス（ESP32側）：0x29（TCS34725、固定）／0x48（ADS1115、
 
 **raw / calibrated / estimated / confidence を分離する。**pHを酸味、導電率をイオン量、VOCを香りの手掛かりとして扱い、**五味そのものと断定しない。**
 
-## 6. 未収録（本書の範囲外・担当文書未確定）
+## 6. 本書の範囲外の内容の移送先
 
-旧文書 `docs/archive/2026-08-03_channel_map_hphase.md` には、本書の範囲（頭部外ベンチのS3/S4該当分）を超える以下の内容が含まれていたが、現行の10文書構成（`docs/README.md` のディレクトリ構成）には担当文書が割り当てられていない。**削除・消失させず、ここに列挙して申し送る：**
+旧文書 `docs/archive/2026-08-03_channel_map_hphase.md` には、本書の範囲（頭部外ベンチのS3/S4該当分）を超える内容が含まれていた。以下の3文書へ分離済み。
 
-- I²Cアドレスマップの全体像（PCA9685×2・INA219×2を含む頭部全体のバス構成）
-- Arduino Megaピン表のうち、ベンチに直接関わらないもの（PCA_OE、jawModuleID bit0/1、安全系ハートビート出力・入力、E-STOP状態、基板温度センサー、CAN/RS-485予約ピン、USB保守リンク）
-- 固定安全ロジックのうち頭部全体に関わるもの（E-STOP押下、レール過電流、過熱、通信断、ハートビート停止、BMS低電圧、モジュールID不明、待機タイムアウト）
-- 表情プリセット（`neutral`／`angry`／`suspicious`／`thin_smile`／`taste_dislike`／`taste_approve`）
-- 顎モジュールモード（`EXPRESSION_JAW`／`TASTE_ONLY`／`MASTICATION_BENCH`／`MASTICATION_INSTALLED`）
-
-これらは頭部全体の安全・制御アーキテクチャに関わり、S系の中でも本書（S3/S4ベンチ）より広い範囲（S5/S6相当）を扱う新規文書が必要と考えられる。**次のコミット（OPEN_ISSUES.md作成）までに文書構成をどうするか判断すること。**
+| 内容 | 移送先 |
+|---|---|
+| I²Cアドレスマップの全体像（PCA9685×2・INA219×2を含む頭部全体のバス構成、All Callアドレス重複の扱い） | `docs/S/i2c_address_map.md` |
+| Arduino Megaピン表のうち、ベンチに直接関わらないもの（PCA_OE、jawModuleID bit0/1、安全系ハートビート出力・入力、E-STOP状態、基板温度センサー、CAN/RS-485予約ピン、USB保守リンク） | `docs/S/mcu_pinmap.md` |
+| 固定安全ロジックのうち頭部全体に関わるもの（E-STOP押下、レール過電流、過熱、通信断、ハートビート停止、BMS低電圧、モジュールID不明、待機タイムアウト） | `docs/S/safety_logic.md` |
+| 表情プリセット（`neutral`／`angry`／`suspicious`／`thin_smile`／`taste_dislike`／`taste_approve`） | `docs/R/reserved_axes.md` §4（軸名のみ。具体値は書かない） |
+| 顎モジュールモード（`EXPRESSION_JAW`／`TASTE_ONLY`／`MASTICATION_BENCH`／`MASTICATION_INSTALLED`） | `docs/R/reserved_axes.md` §4（モード名のみ。具体値は書かない） |
 
 ## 7. 未決事項
 
 - [ ] tasteSensorLift／throatGate用のMG92B追加調達（在庫5個はR系向けに割当済み。§1参照）
 - [ ] 喉ゲートの非通電時閉機構（ばね等）
 - [ ] 防水温度センサーの型式確定
-- [ ] §6の未収録項目の担当文書を決定する
 
 ---
 
 ## 変更履歴
 
-- **v1 2026-08-04** 旧H-Phase体系文書からS3/S4ベンチ該当分のみを分離して新規作成。頭部全体に関わる安全・制御ロジックは範囲外として§6に明示的に申し送った。
+- **v1 2026-08-04** 旧H-Phase体系文書からS3/S4ベンチ該当分のみを分離して新規作成。頭部全体に関わる安全・制御ロジックは範囲外として`docs/S/i2c_address_map.md`・`docs/S/safety_logic.md`・`docs/S/mcu_pinmap.md`・`docs/R/reserved_axes.md`へ移送し、§6を移送先を示す表へ更新した。
 
 ## 参照一覧
 
@@ -115,4 +114,7 @@ I²Cアドレス（ESP32側）：0x29（TCS34725、固定）／0x48（ADS1115、
 |---|---|---|
 | `docs/R/reserved_axes.md` | ローカルリポジトリ内 | 2026-08-04 |
 | `docs/S/power_tree.md` | ローカルリポジトリ内 | 2026-08-04 |
+| `docs/S/i2c_address_map.md` | ローカルリポジトリ内 | 2026-08-04 |
+| `docs/S/safety_logic.md` | ローカルリポジトリ内 | 2026-08-04 |
+| `docs/S/mcu_pinmap.md` | ローカルリポジトリ内 | 2026-08-04 |
 | 旧文書 `docs/archive/2026-08-03_channel_map_hphase.md` | ローカルリポジトリ内 | 2026-08-03 |

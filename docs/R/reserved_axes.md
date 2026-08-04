@@ -5,7 +5,7 @@
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: R（独自商用頭部。白紙CADからの新規設計。2027年R1-R9）
 変更履歴:
-- v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、決定2に従いR系軸（表情7軸）を予約軸として新規分離。**InMoov由来の形状・寸法・メッシュへの参照は一切含めない。** 在庫MG92B×5・SG92R×8を2027年R系向けとして紐付けた。
+- v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、決定2に従いR系軸（表情7軸）を予約軸として新規分離。**InMoov由来の形状・寸法・メッシュへの参照は一切含めない。** 在庫MG92B×5・SG92R×8を2027年R系向けとして紐付けた。表情プリセット・顎モジュールモードを `docs/S/mcu_pinmap.md`・`docs/S/safety_logic.md` から軸名/モード名のみ申し送った（§4。具体値は書かない）。
 
 **知財上の注意**：R系は白紙CADからの新規設計であり、L系（InMoov 100%学習機、Attribution-NonCommercial）の形状・寸法・STL・メッシュを一切引き継がない。本書は電気的な軸予約（チャンネル・在庫の紐付け）のみを扱い、寸法・形状・設計値は記載しない。詳細は `docs/decisions/2026-08-03_lrsm_migration.md` を参照。
 
@@ -40,11 +40,22 @@
 
 2026年時点では、上表の予約CHはPCA9685 #1（0x40）・レールA（5.8V）上の未接続チャンネルとして扱う。電力予算（`docs/S/power_tree.md` §6.1）にはこの7chの負荷を含めていない。物理的な配線・給電を2026年中に行わないこと。
 
-## 4. 未決事項
+## 4. 将来定義（表情プリセット・顎モジュールモード）
+
+`docs/S/mcu_pinmap.md`・`docs/S/safety_logic.md` からの申し送り。**軸名・モード名のみを記載し、具体的な角度・パルス幅・プリセット値は書かない**（旧文書の数値はInMoov由来の可能性があり、R系文書に持ち込まない）。
+
+**表情プリセット**（対象：本書§1のR系表情軸。2027年R5以降に具体値を定義）：
+`neutral` ／ `angry` ／ `suspicious` ／ `thin_smile` ／ `taste_dislike` ／ `taste_approve`
+
+**顎モジュールモード**（jawModuleID、`docs/S/mcu_pinmap.md` §2 D8/D9参照。2027年以降に具体的な制限値を定義）：
+`EXPRESSION_JAW` ／ `TASTE_ONLY` ／ `MASTICATION_BENCH` ／ `MASTICATION_INSTALLED`
+
+## 5. 未決事項
 
 - [ ] 2027年R5着手時のボード・レール物理分離方式の決定
 - [ ] R系独自頭部の白紙CAD設計着手（本書の対象外。R5以降の別文書で扱う）
 - [ ] MG92B在庫5個のうち、S系ベンチ軸（throatGate／tasteSensorLift）が別途MG92Bを必要とする場合の追加調達要否（`docs/S/bench_axes_S3S4.md` 参照）
+- [ ] 表情プリセット・顎モジュールモードの具体値（角度・パルス幅）の定義（2027年R5以降）
 
 ---
 
