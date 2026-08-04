@@ -6,6 +6,8 @@
 系統タグ: R（独自商用頭部。白紙CADからの新規設計。2027年R1-R9）
 変更履歴:
 - v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、決定2に従いR系軸（表情7軸）を予約軸として新規分離。**InMoov由来の形状・寸法・メッシュへの参照は一切含めない。** 在庫MG92B×5・SG92R×8を2027年R系向けとして紐付けた。表情プリセット・顎モジュールモードを `docs/S/mcu_pinmap.md`・`docs/S/safety_logic.md` から軸名/モード名のみ申し送った（§4。具体値は書かない）。
+  - forehead軸（foreheadRight／foreheadLeft）の綴り誤り（forhead→forehead）を修正。R系は白紙CADの新規設計であり、InMoov公式パーツ名の誤字を踏襲する理由がないため。
+  - MG92B予備2個の配分方針を「S系ベンチ軸が別途調達を要する」という断定から、案(a)(b)の2案併記へ修正（§2・§5。`docs/S/bench_axes_S3S4.md` §1と整合）。
 
 **知財上の注意**：R系は白紙CADからの新規設計であり、L系（InMoov 100%学習機、Attribution-NonCommercial）の形状・寸法・STL・メッシュを一切引き継がない。本書は電気的な軸予約（チャンネル・在庫の紐付け）のみを扱い、寸法・形状・設計値は記載しない。詳細は `docs/decisions/2026-08-03_lrsm_migration.md` を参照。
 
@@ -22,15 +24,15 @@
 | cheekLeft | PCA9685 #1（0x40） ch2 | R | MG92B（同上） | 未実装。2027年R5で確定 |
 | eyebrowRight | PCA9685 #1（0x40） ch3 | R | SG92R（在庫8個のうち割当予定） | 未実装。2027年R5で確定 |
 | eyebrowLeft | PCA9685 #1（0x40） ch4 | R | SG92R（同上） | 未実装。2027年R5で確定 |
-| forheadRight | PCA9685 #1（0x40） ch5 | R | SG92R（同上） | 未実装。2027年R5で確定 |
-| forheadLeft | PCA9685 #1（0x40） ch6 | R | SG92R（同上） | 未実装。2027年R5で確定 |
+| foreheadRight | PCA9685 #1（0x40） ch5 | R | SG92R（同上） | 未実装。2027年R5で確定 |
+| foreheadLeft | PCA9685 #1（0x40） ch6 | R | SG92R（同上） | 未実装。2027年R5で確定 |
 
 ## 2. 在庫紐付け
 
 | 型番 | 在庫数 | 対象軸数 | 紐付け | 用途外の使用禁止 |
 |---|---|---|---|---|
-| MG92B | 5個 | 3軸（upperLip／cheekRight／cheekLeft） | 3軸分＋予備2個 | **2027年R系向け在庫。2026年に実装しない** |
-| SG92R | 8個 | 4軸（eyebrowRight／eyebrowLeft／forheadRight／forheadLeft） | 4軸分＋予備4個 | **2027年R系向け在庫。2026年に実装しない** |
+| MG92B | 5個 | 3軸（upperLip／cheekRight／cheekLeft） | 3軸分＋予備2個（**予備2個の配分は未確定。`docs/S/bench_axes_S3S4.md` §1の案a／案bを参照**） | **2027年R系向け在庫。2026年に実装しない（予備2個を除く）** |
+| SG92R | 8個 | 4軸（eyebrowRight／eyebrowLeft／foreheadRight／foreheadLeft） | 4軸分＋予備4個 | **2027年R系向け在庫。2026年に実装しない** |
 
 **在庫数の紐付けのみを行う。**寸法・形状・設計値・実装方法は本書に記載しない。型番の電気的仕様（電圧・トルク・電流等）は `docs/reference/servo_datasheets.md` を参照。
 
@@ -54,7 +56,7 @@
 
 - [ ] 2027年R5着手時のボード・レール物理分離方式の決定
 - [ ] R系独自頭部の白紙CAD設計着手（本書の対象外。R5以降の別文書で扱う）
-- [ ] MG92B在庫5個のうち、S系ベンチ軸（throatGate／tasteSensorLift）が別途MG92Bを必要とする場合の追加調達要否（`docs/S/bench_axes_S3S4.md` 参照）
+- [ ] MG92B予備2個の配分方針決定（案a: S系ベンチ軸（throatGate／tasteSensorLift）へ充当し、R系は予備なしとする／案b: S系用に別途2個調達し、R系の予備2個を維持する。`docs/S/bench_axes_S3S4.md` §1参照）
 - [ ] 表情プリセット・顎モジュールモードの具体値（角度・パルス幅）の定義（2027年R5以降）
 
 ---

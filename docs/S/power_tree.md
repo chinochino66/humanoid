@@ -15,6 +15,7 @@
   - **参照一覧のデータシート出典を一次情報（TI／Pololu／Littelfuse）で確認し、URLと取得日を記入した。**
   - E-STOP検証：全アクチュエータ給電経路が遮断段（CUT）を通ることを図1上で確認し、迂回経路が無いことを明記した（§3）。
   - 旧文書のH-Phase参照を新体系（S/M系）へ置換した。
+  - §5のforehead軸表記の綴り誤り（forhead→forehead）を修正。R系は白紙CADの新規設計であり、InMoov公式パーツ名の誤字を踏襲する理由がないため。
 
 対象: InMoov首・i2Head＋口内モジュール＋味覚ノード
 
@@ -164,7 +165,7 @@ flowchart TB
 - **レールBはD36V50F5（5V固定・5.5A）を採用。**逆電圧保護・過電流保護・過熱保護・ソフトスタートを内蔵するため、逆接保護をレールB区間に限り解消する
 - **5V動作によるトルク低下（公称6V比で約2割減）は、首サーボ選定時にトルク計算で妥当性を検証すること**（`docs/L/servo_assignment_L2.md` 側で扱う）
 - 5V-LOGICを遮断しない理由: 非常停止後もログ、状態機械、安全監視を保持するため
-- **レールAの2026年実装範囲はeyeX／eyeY／eyelidLeft／eyelidRightの4ch（MG90S×4）のみ。**upperLip／cheekRight／cheekLeft／eyebrowRight／eyebrowLeft／forheadRight／forheadLeftの7ch（R系軸）は決定2により2027年R5着手時に追加するものであり、現時点の電力予算には含めない。tasteSensorLift（1ch）はS系ベンチ軸として `docs/S/bench_axes_S3S4.md` で扱う。ch12-15（4ch）は予備
+- **レールAの2026年実装範囲はeyeX／eyeY／eyelidLeft／eyelidRightの4ch（MG90S×4）のみ。**upperLip／cheekRight／cheekLeft／eyebrowRight／eyebrowLeft／foreheadRight／foreheadLeftの7ch（R系軸）は決定2により2027年R5着手時に追加するものであり、現時点の電力予算には含めない。tasteSensorLift（1ch）はS系ベンチ軸として `docs/S/bench_axes_S3S4.md` で扱う。ch12-15（4ch）は予備
 - PTCの直列抵抗（RXEF250相当、初期値0.05Ω）による電圧降下は §7-5 を参照
 
 ## 6. 電流予算と稼働時間（a）

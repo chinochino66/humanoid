@@ -7,7 +7,8 @@
 変更履歴:
 - v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_servo_comparison_hphase.md` から、L2 InMoov頭部の軸割当のみを分離して新規作成。
   - **決定1に従い、首サーボ（neckRotate／neckUpDown）の発注保留を解除した。** 旧文書は将来の咀嚼顎質量（`FutureJaw_MassEnvelope_v0`）確定まで首サーボを確定しないとしていたが、咀嚼機構はM系（2034年以降）であり搭載先はR系独自頭部である。L機はL5で凍結される学習機であり咀嚼顎を載せないため、L機の首サーボ選定を咀嚼顎質量確定でブロックする根拠が無い。解除の詳細な経緯・知財上の根拠は `docs/decisions/2026-08-03_lrsm_migration.md` を参照。
-  - R系軸（upperLip／cheek×2／eyebrow×2／forhead×2、決定2）とS系軸（throatGate／tasteSensorLift）はここに含めない。R系は `docs/R/reserved_axes.md`、S系は `docs/S/bench_axes_S3S4.md` を参照。
+  - R系軸（upperLip／cheek×2／eyebrow×2／forehead×2、決定2）とS系軸（throatGate／tasteSensorLift）はここに含めない。R系は `docs/R/reserved_axes.md`、S系は `docs/S/bench_axes_S3S4.md` を参照。
+  - forehead軸の綴り誤り（forhead→forehead）を修正。R系は白紙CADの新規設計であり、InMoov公式パーツ名の誤字を踏襲する理由がないため。
 
 ---
 

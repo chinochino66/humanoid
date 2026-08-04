@@ -6,6 +6,7 @@
 系統タグ: 全系統共通（メタ文書）
 変更履歴:
 - 2026-08-04 新規作成（旧H-Phase体系からL/R/S/M体系への移行に伴う）
+- 2026-08-04 ディレクトリ構成表を更新。コミット5で追加した3文書（i2c_address_map.md／safety_logic.md／mcu_pinmap.md）を追加し、docs/decisions/配下のファイル名を明記。全13文書（本ファイル含む）が構成表から辿れる状態にした。
 
 ## 体系概要 L/R/S/M
 
@@ -20,22 +21,26 @@
 
 ```
 docs/
-  README.md                        本ファイル
+  README.md                        本ファイル。L/R/S/M体系とディレクトリ構成の説明、知財境界の明示
   decisions/                       意思決定の記録
+    2026-08-03_lrsm_migration.md   H-Phase体系からL/R/S/M体系への移行決定記録（経緯・理由・知財根拠）
   archive/                         旧H-Phase体系の退避文書（参照専用、編集禁止）
+  OPEN_ISSUES.md                   未確認事項一覧（影響度別に横断管理）
   L/                                L系（InMoov学習機、非商用）
-    servo_assignment_L2.md
-    channel_map_L2.md
+    servo_assignment_L2.md         L2頭部の軸とサーボ割当。首サーボ発注保留の解除を記録
+    channel_map_L2.md              L2頭部チャンネル表（目・瞼・首・顎の7ch）
     failure_log/
-      scale_94.md
+      scale_94.md                  94%スケール不採用の失敗記録
   R/                                R系（独自商用頭部、2027年〜）
-    reserved_axes.md
+    reserved_axes.md               R系予約軸表（表情7軸）と在庫（MG92B／SG92R）の紐付け
   S/                                S系（安全・制御・知覚）
-    power_tree.md
-    bench_axes_S3S4.md
+    power_tree.md                  電源系統図。レール定義・保護部品・稼働時間計算
+    bench_axes_S3S4.md             S3/S4ベンチ軸表（喉ゲート・味覚リフト・ポンプ・漏水検知）
+    i2c_address_map.md             I²Cアドレスマップ全体。PCA9685のAll Callアドレス重複の扱い
+    safety_logic.md                頭部全体の固定安全ロジック（E-STOP等8条件）。第3層未実装のリスクを記録
+    mcu_pinmap.md                  Arduino Megaピン表全体
   reference/                        系統非依存の仕様表
-    servo_datasheets.md
-  OPEN_ISSUES.md                    未確認事項一覧
+    servo_datasheets.md            サーボ諸元表（軸割当を含まない、メーカー一次情報で確認済み）
 ```
 
 ## 知財境界の明示

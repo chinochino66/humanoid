@@ -6,6 +6,7 @@
 系統タグ: S（安全・制御・知覚。頭部外ベンチ機能）
 変更履歴:
 - v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、throatGate／tasteSensorLift／ペリスタポンプ／漏水・満水・トレー検知／味覚JSONスキーマ／ESP32ノード構成と、固定安全ロジックのうちS系該当分を分離して新規作成。§6で「担当文書未確定」としていた残りの内容は `docs/S/i2c_address_map.md`・`docs/S/safety_logic.md`・`docs/S/mcu_pinmap.md`・`docs/R/reserved_axes.md` へ移送し、§6を移送先を示す表へ更新した。
+  - §1のMG92B在庫に関する記述を修正。「別途調達が必要」という断定を撤回し、R系予備2個の充当（案a）と別途調達（案b）の2案併記へ変更した（`docs/R/reserved_axes.md`・`docs/OPEN_ISSUES.md` #13 と整合）。
 
 **頭部外ベンチ。頭部の表に混ぜない。** throatGateとtasteSensorLiftは2026年時点では電気的に頭部のPCA9685基板（PCA9685 #1 ch11、PCA9685 #2 ch3）に接続されるが、系統としてはS系（頭部外ベンチ機能）として扱い、`docs/L/channel_map_L2.md`（L系）には含めない。
 
@@ -18,7 +19,10 @@
 | 0x40（PCA9685 #1） | 11 | tasteSensorLift | S | MG92B | レールA（5.8V） | 未実装 | 味覚プレート昇降 |
 | 0x41（PCA9685 #2） | 3 | throatGate | S | MG92B | レールB（5.0V） | 未実装 | **通常時クローズ。非通電時も閉じる機構が必要**（`docs/OPEN_ISSUES.md` 登録対象） |
 
-**在庫上の注意**：`docs/R/reserved_axes.md` により、現在庫のMG92B×5個は2027年R系向けと整理されている。上表の2軸（tasteSensorLift／throatGate）に必要なMG92Bはこの5個に含まれていないため、**別途調達が必要**（§5未決事項）。
+**在庫上の注意**：`docs/R/reserved_axes.md` により、現在庫のMG92B×5個は2027年R系向け（3軸分＋予備2個）と整理されている。上表の2軸（tasteSensorLift／throatGate）を合わせるとR系3軸＋S系2軸＝計5軸となり、**数量上はR系の予備2個をS系へ充てれば足りる。**「別途調達が必要」と断定していた記述は撤回する。実装前に以下いずれかの方針を選択すること（§7未決事項）：
+
+- 案(a) R系の予備2個をS系ベンチ軸（tasteSensorLift／throatGate）へ充てる。R系は予備なしとなる。
+- 案(b) S系ベンチ軸用に別途2個調達し、R系の予備2個は維持する。
 
 ## 2. ペリスタポンプ（Arduino Mega、第2層）
 
@@ -98,7 +102,7 @@ I²Cアドレス（ESP32側）：0x29（TCS34725、固定）／0x48（ADS1115、
 
 ## 7. 未決事項
 
-- [ ] tasteSensorLift／throatGate用のMG92B追加調達（在庫5個はR系向けに割当済み。§1参照）
+- [ ] tasteSensorLift／throatGate用MG92Bの配分方針決定（案a: R系予備2個を充当／案b: 別途2個調達。§1参照）
 - [ ] 喉ゲートの非通電時閉機構（ばね等）
 - [ ] 防水温度センサーの型式確定
 

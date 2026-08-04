@@ -5,9 +5,10 @@
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: L（InMoov 100%学習機・非商用。L5で凍結）
 変更履歴:
-- v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、L系の軸のみを分離して新規作成。R系軸（upperLip/cheek×2/eyebrow×2/forhead×2）・S系軸（tasteSensorLift/throatGate）を1行も含めない。首サーボ（neckRotate/neckUpDown）は決定1により発注保留を解除した状態で記載（`docs/L/servo_assignment_L2.md` 参照）。顎の試験角度15°とハードコード上限20°の区別を維持した。
+- v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_channel_map_hphase.md` から、L系の軸のみを分離して新規作成。R系軸（upperLip/cheek×2/eyebrow×2/forehead×2）・S系軸（tasteSensorLift/throatGate）を1行も含めない。首サーボ（neckRotate/neckUpDown）は決定1により発注保留を解除した状態で記載（`docs/L/servo_assignment_L2.md` 参照）。顎の試験角度15°とハードコード上限20°の区別を維持した。
+  - forehead軸の綴り誤り（forhead→forehead）を修正。R系は白紙CADの新規設計であり、InMoov公式パーツ名の誤字を踏襲する理由がないため。
 
-**本書に含めないもの**：R系軸（upperLip／cheekRight／cheekLeft／eyebrowRight／eyebrowLeft／forheadRight／forheadLeft）は `docs/R/reserved_axes.md`、S系軸（tasteSensorLift／throatGate）とESP32・安全ロジック等は `docs/S/bench_axes_S3S4.md` を参照。
+**本書に含めないもの**：R系軸（upperLip／cheekRight／cheekLeft／eyebrowRight／eyebrowLeft／foreheadRight／foreheadLeft）は `docs/R/reserved_axes.md`、S系軸（tasteSensorLift／throatGate）とESP32・安全ロジック等は `docs/S/bench_axes_S3S4.md` を参照。
 
 ---
 
