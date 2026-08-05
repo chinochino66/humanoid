@@ -1,12 +1,13 @@
 # docs
 
-版数: v1
-改訂日: 2026-08-04
+版数: v1.1
+改訂日: 2026-08-05
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 全系統共通（メタ文書）
 変更履歴:
 - 2026-08-04 新規作成（旧H-Phase体系からL/R/S/M体系への移行に伴う）
 - 2026-08-04 ディレクトリ構成表を更新。コミット5で追加した3文書（i2c_address_map.md／safety_logic.md／mcu_pinmap.md）を追加し、docs/decisions/配下のファイル名を明記。全13文書（本ファイル含む）が構成表から辿れる状態にした。
+- **2026-08-05** 「手順書成果物名との対応」セクションを新設。蓮冥頭部 開発手順書 Version 2.0（2026-08-03）の成果物名と本リポジトリ文書との対応を明記した。未作成の4件を `docs/OPEN_ISSUES.md` へ影響度「中」で新規登録（#34〜#37）。
 
 ## 体系概要 L/R/S/M
 
@@ -66,7 +67,26 @@ M系（実咀嚼・搬送・洗浄・排出、2034年以降）はR系頭部へ�
 
 旧文書は `docs/archive/` に退避済み（参照専用）。移行の経緯・判断根拠は [`docs/decisions/2026-08-03_lrsm_migration.md`](decisions/2026-08-03_lrsm_migration.md) を参照。
 
+## 手順書成果物名との対応
+
+準拠文書：蓮冥頭部 開発手順書 Version 2.0（2026-08-03）
+
+手順書が定義する成果物名と、本リポジトリ内の対応文書の紐付けを示す。未作成の成果物は `docs/OPEN_ISSUES.md` で影響度別に管理する。
+
+| 手順書成果物名 | 対応文書 |
+|---|---|
+| S_PowerArchitecture_v1 | `docs/S/power_tree.md` |
+| S_HeadBus_Pinout_v1 | `docs/S/mcu_pinmap.md` |
+| S_IndependentSafetyController_v1 | `docs/S/safety_logic.md`（要求のみ。実装未選定） |
+| S_PowerCut_TestReport_v1 | 未作成（実機試験後） |
+| L_NeckRotate_Baseline_v1 | 未作成（L2実機試験の記録） |
+| L2_PartsScale_Record_v1 | 未作成 |
+| L2_Wiring_and_Stop_Test_v1 | 未作成 |
+
+**未作成の4件（S_PowerCut_TestReport_v1／L_NeckRotate_Baseline_v1／L2_PartsScale_Record_v1／L2_Wiring_and_Stop_Test_v1）は、L2完了ゲートに必要な成果物であるため `docs/OPEN_ISSUES.md` へ影響度「中」で登録済み（#34〜#37）。**
+
 ## 参照一覧
 
 - 器創造計画 2026-2033（改訂基準日 2026-08-03）
+- 蓮冥頭部 開発手順書 Version 2.0（2026-08-03） 取得日: 2026-08-03
 - 蓮冥頭部 H-Phase 0-24 改訂手順書（2026-08-03改訂、旧体系） 取得日: 2026-08-03

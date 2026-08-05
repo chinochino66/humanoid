@@ -1,13 +1,13 @@
 # 未確認事項一覧
 
-版数: v1.3
+版数: v1.4
 改訂日: 2026-08-05
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 系統非依存（全系統の未確認事項を横断的に管理する）
 変更履歴:
 - v1 2026-08-04 L/R/S/M体系への移行に伴い新規作成。各文書中で「`docs/OPEN_ISSUES.md` へ登録」とした項目を、影響度別に一覧化した。
 
-**本書の位置づけ**：各文書（`docs/S/power_tree.md`・`docs/L/servo_assignment_L2.md`・`docs/reference/servo_datasheets.md`・`docs/L/channel_map_L2.md`・`docs/R/reserved_axes.md`・`docs/S/bench_axes_S3S4.md`・`docs/S/i2c_address_map.md`・`docs/S/safety_logic.md`・`docs/S/mcu_pinmap.md`・`docs/L/failure_log/scale_94.md`）で「未確認」「未実測」「未決定」として登録された事項を、影響度別に横断管理する。解決したら該当行を消さず、現状・期限を更新し、解決日を付記すること。
+**本書の位置づけ**：各文書（`docs/S/power_tree.md`・`docs/L/servo_assignment_L2.md`・`docs/reference/servo_datasheets.md`・`docs/L/channel_map_L2.md`・`docs/R/reserved_axes.md`・`docs/S/bench_axes_S3S4.md`・`docs/S/i2c_address_map.md`・`docs/S/safety_logic.md`・`docs/S/mcu_pinmap.md`・`docs/L/failure_log/scale_94.md`・`docs/README.md`）で「未確認」「未実測」「未決定」として登録された事項を、影響度別に横断管理する。解決したら該当行を消さず、現状・期限を更新し、解決日を付記すること。
 
 ---
 
@@ -39,6 +39,10 @@
 | 15 | 過熱閾値・BMS低電圧閾値の具体的数値の決定 | 中 | 未決定。基板温度センサーの実装位置未確定、BMS型式未選定のため電圧閾値も未定 | 基板温度センサー実装位置確定後に温度閾値を設定。BMS型式選定後に電圧閾値を設定 | 未定 | `docs/S/safety_logic.md` |
 | 32 | 左右独立サーボのソフトウェア同期の実装 | 中 | 目の左右8軸は機械的に連動せず、`inmoov.fr/eyes-i2/` によれば本来MyRobotLab側のソフトウェア同期で左右を揃える設計（本リポジトリはArduino Mega直接制御のためMyRobotLabを使用しない）。同期ロジック（左右の目を同時に動かす際の同期方式）が未実装 | 第2層（Mega）ファームウェアで左右同期ロジックを実装し、実機で目視確認する | L2実装時 | `docs/L/channel_map_L2.md`、`docs/L/servo_assignment_L2.md` |
 | 33 | 瞼へのSG92R使用可否（公式がSG90級を非推奨） | 中 | 外部の部品表は瞼へSG92Rの充当を示すが、SG92RはTowerPro自身が「New version of SG90」と説明する製品であり、InMoov公式の「avoid using cheap SG90, they won't last long」という警告が該当し得る。瞼は高デューティ軸で寿命リスクが懸念される | SG92Rの実機耐久試験、または公式指定JX PDI-1109MGへの統一を検討する | L2実装前 | `docs/L/servo_assignment_L2.md` §2.1 |
+| 34 | 手順書成果物 S_PowerCut_TestReport_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義する電源遮断試験報告書が未作成。実機試験後に作成予定 | 実機での電源遮断試験を実施し、報告書を作成する | L2完了ゲート前 | `docs/README.md`、`docs/S/power_tree.md` |
+| 35 | 手順書成果物 L_NeckRotate_Baseline_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義する首回転ベースライン記録（L2実機試験の記録）が未作成 | L2実機試験を実施し、記録を作成する | L2完了ゲート前 | `docs/README.md`、`docs/L/servo_assignment_L2.md` |
+| 36 | 手順書成果物 L2_PartsScale_Record_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義するL2部品スケール記録が未作成 | L2部品のスケール記録を作成する | L2完了ゲート前 | `docs/README.md` |
+| 37 | 手順書成果物 L2_Wiring_and_Stop_Test_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義するL2配線・停止試験記録が未作成 | L2の配線・E-STOP動作試験を実施し、記録を作成する | L2完了ゲート前 | `docs/README.md`、`docs/S/safety_logic.md` |
 
 ## 影響度：低
 
@@ -68,6 +72,7 @@
 - **v1.1 2026-08-04** `inmoov.fr/eyes-i2/` の一次情報により目の軸数の誤りを発見。#30を「未確認」から「解決済み」へ更新し（目は眼球4軸＋瞼4軸＝計8軸、公式指定JX PDI-1109MG）、波及した新規項目として#31（目サーボ4本の追加調達、高）・#32（左右独立サーボのソフトウェア同期実装、中）・#33（瞼へのSG92R使用可否、中）を追加した。計33件（高8件・中11件・低14件）。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` を参照。
 - **v1.2 2026-08-05** #9（PTCの保護協調の整理）の現状を更新。目の8軸化に伴いレールAの理論上限電流が2.8A→5.6Aとなり、PTCのトリップ電流5.0Aを初めて上回った事実を反映したが、トリップ時間15.6秒がLM2596の破壊域に対して遅すぎるため「PTCはレギュレータ自体を保護しない」という結論自体は不変（`docs/S/power_tree.md` §7-5(a)参照）。
 - **v1.3 2026-08-05** #13（MG92B予備2個の配分方針決定）の現状を「未決」から「部品表では案(a)が前提。正式採否を確認する」へ更新。部品表の「高荷重5軸→MG92B×5」の記載が案(a)を前提としている事実を明記し、`docs/R/reserved_axes.md`・`docs/S/bench_axes_S3S4.md` と整合させた。
+- **v1.4 2026-08-05** 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）の成果物名対応を `docs/README.md` へ追加したのに伴い、未作成の4件（S_PowerCut_TestReport_v1／L_NeckRotate_Baseline_v1／L2_PartsScale_Record_v1／L2_Wiring_and_Stop_Test_v1）を#34〜#37として影響度「中」で新規登録した。L2完了ゲートに必要な成果物であるため。計37件（高8件・中15件・低14件）。本書の位置づけの対象文書一覧へ `docs/README.md` を追加。
 
 ## 参照一覧
 
