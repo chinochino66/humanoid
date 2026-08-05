@@ -1,6 +1,6 @@
 # 未確認事項一覧
 
-版数: v1.6
+版数: v1.7
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 系統非依存（全系統の未確認事項を横断的に管理する）
@@ -22,7 +22,8 @@
 | 5 | E-STOP遮断シーケンスが第2層（Mega）に依存していないか | 高 | 未確認。依存している場合、Megaのハング中にE-STOP押下後の遮断が正しく実行されない可能性 | 実機配線・回路図の確認 | 未定 | `docs/S/safety_logic.md` |
 | 6 | 首サーボ（HS-805BB×2）の5V時トルク実測 | 高 | 線形補間値（約20.6kg·cm）のみで、選定条件（20kg·cm以上）を僅差で満たす判定。実測ではない | 発注前に実機トルク計測、または5.0V時の値をメーカーへ確認 | 首サーボ発注前 | `docs/L/servo_assignment_L2.md` |
 | 30 | 【解決済み・2026-08-04】目の軸数・型番の確認 | 高 | `inmoov.fr/eyes-i2/`（取得日2026-08-04）の一次情報により確定。**目は眼球4軸＋瞼4軸＝計8軸（左右独立、ソフトウェア同期）、公式指定サーボはJX PDI-1109MG。**旧「eyeX/eyeY共通2軸＋瞼2軸（MG90S）」は誤りだった。`docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md`・`docs/S/power_tree.md` §6.1を再計算済み。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` を参照 | 解決済み（軸数・型番の確定）。残る作業は#31〜#33を参照 | 解決日: 2026-08-04 | `docs/L/channel_map_L2.md`、`docs/L/servo_assignment_L2.md`、`docs/S/power_tree.md` §6.1 |
-| 31 | 目サーボ4本の追加調達（MG90S×4では8軸に不足） | 高 | 目・瞼は8軸確定（#30）。在庫MG90S×4本では4軸分しか賄えず、残り4軸分が不足する。公式指定JX PDI-1109MGを新規発注する場合は8本、在庫MG90Sを併用する場合は追加4本の発注が必要 | 発注方針（JX PDI-1109MG統一かMG90S併用か）を決定し、必要数を発注する | L2実装前 | `docs/L/servo_assignment_L2.md` §2.1、`docs/L/channel_map_L2.md` §1 |
+| 31 | 目サーボ4本の追加調達（MG90S×4では8軸に不足） | 高 | 目・瞼は8軸確定（#30）。在庫MG90S×4本では4軸分しか賄えず、残り4軸分が不足する。公式指定JX PDI-1109MGを新規発注する場合は8本、在庫MG90Sを併用する場合は追加4本の発注が必要 | 発注方針（JX PDI-1109MG統一かMG90S併用か）を決定し、必要数を発注する | L4実装前（手順書のL-Phase 2は首回転のみ。目はL-Phase 4） | `docs/L/servo_assignment_L2.md` §2.1、`docs/L/channel_map_L2.md` §1 |
+| 38 | L0/L1成果物7件がリポジトリ未収録 | 高 | 手順書はL0・L1を完了済みとするが、成果物（Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1／ServoCenter.ino／servo_pin_map.csv／L1_clearance_check.md）がリポジトリに1件も存在しない。手順書のL-Phase 2開始条件が「Calibrator_Result_v1 の採用値がある」であるため、L2の開始条件を文書上満たせていない。#28（CALIBRATOR比較の詳細記録の所在確認）と同根の問題 | ローカル環境で7件の所在を確認し、存在するものをコミットする。存在しないものは「記録なし」を確定させ、再取得の要否を判断する | L2完了ゲート前 | `docs/README.md`、`docs/L/failure_log/scale_94.md` |
 
 ## 影響度：中
 
@@ -37,8 +38,8 @@
 | 13 | MG92B予備2個の配分方針決定（R系予備 or S系ベンチ軸） | 中 | **部品表では案(a)が前提。正式採否を確認する。**部品表の「高荷重5軸（上唇・頬×2・喉ゲート・味覚リフト）→MG92B×5」は、在庫5個全てを案(a)（R系3軸＋S系ベンチ2軸へ配分し、R系は予備なしとなる）で割り当てる前提になっている。案(b)（S系用に別途2個調達しR系予備2個を維持）は部品表に反映されていない。数量上は案(a)で足りるが、正式決定として案(a)を採用するか、案(b)へ変更し追加調達するかは未確認 | 部品表の案(a)前提を正式決定として承認するか、案(b)へ変更し追加調達するかを確認する | 未定 | `docs/R/reserved_axes.md`、`docs/S/bench_axes_S3S4.md` |
 | 14 | 喉ゲートの非通電時閉機構 | 中 | 未決定（ばね等の機構案のみ） | 機構設計・実装。停止シーケンスでの閉動作保証との両立を検討 | 未定 | `docs/S/bench_axes_S3S4.md` |
 | 15 | 過熱閾値・BMS低電圧閾値の具体的数値の決定 | 中 | 未決定。基板温度センサーの実装位置未確定、BMS型式未選定のため電圧閾値も未定 | 基板温度センサー実装位置確定後に温度閾値を設定。BMS型式選定後に電圧閾値を設定 | 未定 | `docs/S/safety_logic.md` |
-| 32 | 左右独立サーボのソフトウェア同期の実装 | 中 | 目の左右8軸は機械的に連動せず、`inmoov.fr/eyes-i2/` によれば本来MyRobotLab側のソフトウェア同期で左右を揃える設計（本リポジトリはArduino Mega直接制御のためMyRobotLabを使用しない）。同期ロジック（左右の目を同時に動かす際の同期方式）が未実装 | 第2層（Mega）ファームウェアで左右同期ロジックを実装し、実機で目視確認する | L2実装時 | `docs/L/channel_map_L2.md`、`docs/L/servo_assignment_L2.md` |
-| 33 | 瞼へのSG92R使用可否（公式がSG90級を非推奨） | 中 | 外部の部品表は瞼へSG92Rの充当を示すが、SG92RはTowerPro自身が「New version of SG90」と説明する製品であり、InMoov公式の「avoid using cheap SG90, they won't last long」という警告が該当し得る。瞼は高デューティ軸で寿命リスクが懸念される | SG92Rの実機耐久試験、または公式指定JX PDI-1109MGへの統一を検討する | L2実装前 | `docs/L/servo_assignment_L2.md` §2.1 |
+| 32 | 左右独立サーボのソフトウェア同期の実装 | 中 | 目の左右8軸は機械的に連動せず、`inmoov.fr/eyes-i2/` によれば本来MyRobotLab側のソフトウェア同期で左右を揃える設計（本リポジトリはArduino Mega直接制御のためMyRobotLabを使用しない）。同期ロジック（左右の目を同時に動かす際の同期方式）が未実装 | 第2層（Mega）ファームウェアで左右同期ロジックを実装し、実機で目視確認する | L4実装時（同上） | `docs/L/channel_map_L2.md`、`docs/L/servo_assignment_L2.md` |
+| 33 | 瞼へのSG92R使用可否（公式がSG90級を非推奨） | 中 | 外部の部品表は瞼へSG92Rの充当を示すが、SG92RはTowerPro自身が「New version of SG90」と説明する製品であり、InMoov公式の「avoid using cheap SG90, they won't last long」という警告が該当し得る。瞼は高デューティ軸で寿命リスクが懸念される | SG92Rの実機耐久試験、または公式指定JX PDI-1109MGへの統一を検討する | L4実装前（同上） | `docs/L/servo_assignment_L2.md` §2.1 |
 | 34 | 手順書成果物 S_PowerCut_TestReport_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義する電源遮断試験報告書が未作成。実機試験後に作成予定 | 実機での電源遮断試験を実施し、報告書を作成する | L2完了ゲート前 | `docs/README.md`、`docs/S/power_tree.md` |
 | 35 | 手順書成果物 L_NeckRotate_Baseline_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義する首回転ベースライン記録（L2実機試験の記録）が未作成 | L2実機試験を実施し、記録を作成する | L2完了ゲート前 | `docs/README.md`、`docs/L/servo_assignment_L2.md` |
 | 36 | 手順書成果物 L2_PartsScale_Record_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）が定義するL2部品スケール記録が未作成 | L2部品のスケール記録を作成する | L2完了ゲート前 | `docs/README.md` |
@@ -75,6 +76,7 @@
 - **v1.4 2026-08-05** 蓮冥頭部 開発手順書 Version 2.0（2026-08-03）の成果物名対応を `docs/README.md` へ追加したのに伴い、未作成の4件（S_PowerCut_TestReport_v1／L_NeckRotate_Baseline_v1／L2_PartsScale_Record_v1／L2_Wiring_and_Stop_Test_v1）を#34〜#37として影響度「中」で新規登録した。L2完了ゲートに必要な成果物であるため。計37件（高8件・中15件・低14件）。本書の位置づけの対象文書一覧へ `docs/README.md` を追加。
 - **v1.5 2026-08-05** #27を `docs/L/failure_log/scale_94.md` §5（手順書1.2、混在部品の扱いの運用規則）と相互参照させた。
 - **v1.6 2026-08-06** 目の軸数訂正（8軸）の反映漏れを修正：#10の現状を「4軸／2.8A」から「8軸／5.6A」へ、#17の項目名・現状・期限を8軸化に合わせて更新（影響度の再判定が必要な旨を付記）。
+- **v1.7 2026-08-06** #31〜#33の期限を「L2実装前後」から「L4実装前後」へ修正（手順書のL-Phase 2は首回転のみ、目はL-Phase 4のため）。L0/L1成果物7件がリポジトリに未収録である事実を#38（影響度：高）として新規登録した。計38件（高9件・中15件・低14件）。
 
 ## 参照一覧
 

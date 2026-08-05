@@ -1,6 +1,6 @@
 # docs
 
-版数: v1.2
+版数: v1.3
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 全系統共通（メタ文書）
@@ -9,6 +9,7 @@
 - 2026-08-04 ディレクトリ構成表を更新。コミット5で追加した3文書（i2c_address_map.md／safety_logic.md／mcu_pinmap.md）を追加し、docs/decisions/配下のファイル名を明記。全13文書（本ファイル含む）が構成表から辿れる状態にした。
 - **2026-08-05** 「手順書成果物名との対応」セクションを新設。蓮冥頭部 開発手順書 Version 2.0（2026-08-03）の成果物名と本リポジトリ文書との対応を明記した。未作成の4件を `docs/OPEN_ISSUES.md` へ影響度「中」で新規登録（#34〜#37）。
 - **v1.2 2026-08-06** ディレクトリ構成表の `channel_map_L2.md` 説明を「目・瞼・首・顎の7ch」から「眼球4軸・瞼4軸・首2軸・顎1軸の計11ch」へ修正（目の軸数訂正の反映漏れ）。
+- **v1.3 2026-08-06** 「手順書成果物名との対応」テーブルへL0/L1成果物7件を追加し、いずれも「リポジトリ未収録」（`docs/OPEN_ISSUES.md` #38）と明記。テーブル直後の注記へ、L0/L1成果物未収録によりL2開始条件が文書上満たせていない旨の段落を追加した。
 
 ## 体系概要 L/R/S/M
 
@@ -76,6 +77,13 @@ M系（実咀嚼・搬送・洗浄・排出、2034年以降）はR系頭部へ�
 
 | 手順書成果物名 | 対応文書 |
 |---|---|
+| Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| L0_WetDry_ServiceRoute_Map_v1 | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| Phase0_Handover_Record_v1 | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| Calibrator_Result_v1 | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| ServoCenter.ino | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| servo_pin_map.csv | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| L1_clearance_check.md | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
 | S_PowerArchitecture_v1 | `docs/S/power_tree.md` |
 | S_HeadBus_Pinout_v1 | `docs/S/mcu_pinmap.md` |
 | S_IndependentSafetyController_v1 | `docs/S/safety_logic.md`（要求のみ。実装未選定） |
@@ -85,6 +93,8 @@ M系（実咀嚼・搬送・洗浄・排出、2034年以降）はR系頭部へ�
 | L2_Wiring_and_Stop_Test_v1 | 未作成 |
 
 **未作成の4件（S_PowerCut_TestReport_v1／L_NeckRotate_Baseline_v1／L2_PartsScale_Record_v1／L2_Wiring_and_Stop_Test_v1）は、L2完了ゲートに必要な成果物であるため `docs/OPEN_ISSUES.md` へ影響度「中」で登録済み（#34〜#37）。**
+
+**また、L0/L1の成果物7件はリポジトリに未収録である。手順書のL-Phase 2開始条件に「Calibrator_Result_v1 の採用値がある」と明記されているため、L2の開始条件が文書上満たせていない。`docs/OPEN_ISSUES.md` #38（影響度：高）へ登録した。**
 
 ## 参照一覧
 
