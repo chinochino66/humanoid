@@ -1,13 +1,13 @@
 # I²Cアドレスマップ
 
-版数: v1
-改訂日: 2026-08-04
+版数: v1.1
+改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: S（安全・制御・知覚。頭部全体の第2層バス構成）
 変更履歴:
 - v1 2026-08-04 `docs/S/bench_axes_S3S4.md` §6で「担当文書未確定」としていたI²Cアドレスマップの全体像を新規文書として分離。PCA9685のAll Callアドレス重複の扱い（`docs/OPEN_ISSUES.md` 登録項目）を整理し、空きアドレス帯を明示した。
 
-**本書の位置づけ**：頭部第2層（Arduino Mega）バス上のI²Cデバイス全体のアドレス割当を扱う。軸割当は `docs/L/channel_map_L2.md`（L系）・`docs/R/reserved_axes.md`（R系）・`docs/S/bench_axes_S3S4.md`（S系）を参照。電源レール・電流監視の詳細は `docs/S/power_tree.md` を参照。
+**本書の位置づけ**：頭部第2層（Arduino Mega）バス上のI²Cデバイス全体のアドレス割当を扱う。軸割当は `docs/L/channel_map_L.md`（L系）・`docs/R/reserved_axes.md`（R系）・`docs/S/bench_axes_S3S4.md`（S系）を参照。電源レール・電流監視の詳細は `docs/S/power_tree.md` を参照。
 
 ---
 
@@ -91,6 +91,7 @@ I²Cの7ビットアドレス空間は0x08〜0x77が汎用領域（0x00〜0x07�
 ## 変更履歴
 
 - **v1 2026-08-04** `docs/S/bench_axes_S3S4.md` から分離して新規作成。All Callアドレス重複の扱いと空きアドレス帯を明示した。
+- **v1.1 2026-08-06** `docs/L/channel_map_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md` へ更新した（内容の変更はない）。
 
 ## 参照一覧
 
@@ -98,7 +99,7 @@ I²Cの7ビットアドレス空間は0x08〜0x77が汎用領域（0x00〜0x07�
 |---|---|---|
 | NXP PCA9685 データシート（MODE1レジスタ、ALLCALL/SUB1/SUB2/SUB3ビット、ALLCALLADR/SUBADRデフォルト値の根拠） | https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf | 2026-08-04 |
 | `docs/S/power_tree.md` | ローカルリポジトリ内 | 2026-08-04 |
-| `docs/L/channel_map_L2.md` | ローカルリポジトリ内 | 2026-08-04 |
+| `docs/L/channel_map_L.md` | ローカルリポジトリ内 | 2026-08-04 |
 | `docs/R/reserved_axes.md` | ローカルリポジトリ内 | 2026-08-04 |
 | `docs/S/bench_axes_S3S4.md` | ローカルリポジトリ内 | 2026-08-04 |
 | 旧文書 `docs/archive/2026-08-03_channel_map_hphase.md` | ローカルリポジトリ内 | 2026-08-03 |

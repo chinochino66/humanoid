@@ -1,7 +1,7 @@
 # 決定記録：目の軸数誤り（4軸誤認）の訂正
 
-版数: v1
-改訂日: 2026-08-04
+版数: v1.1
+改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 全系統（決定記録。L系文書群に波及）
 変更履歴:
@@ -13,7 +13,7 @@
 
 ## 誤りの内容
 
-L/R/S/M体系への移行時（2026-08-04、コミット1〜7）、L2 InMoov頭部の目関連軸を「eyeX／eyeY（両目共通2軸）＋eyelidLeft／eyelidRight（瞼2軸）＝計4軸」として `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md`・`docs/S/power_tree.md` に記載していた。
+L/R/S/M体系への移行時（2026-08-04、コミット1〜7）、L2 InMoov頭部の目関連軸を「eyeX／eyeY（両目共通2軸）＋eyelidLeft／eyelidRight（瞼2軸）＝計4軸」として `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md`・`docs/S/power_tree.md` に記載していた。
 
 これは誤りだった。正しくは、InMoov公式のi2Eyes機構は**片目あたり4サーボ（眼球X/Y・上瞼・下瞼）×左右＝計8軸、かつ左右は機械的に連動せずソフトウェア同期**である。
 
@@ -39,8 +39,8 @@ L/R/S/M体系への移行時（2026-08-04、コミット1〜7）、L2 InMoov頭�
 
 | 文書 | 変更内容 |
 |---|---|
-| `docs/L/channel_map_L2.md` | L系チャンネル数を7ch→11ch（目8＋首2＋顎1）へ拡張。eyeX/eyeYの「両目左右共通軸」記述を削除し、eyeLeftX／eyeLeftY／eyeRightX／eyeRightY／eyelidLeftUpper／eyelidLeftLower／eyelidRightUpper／eyelidRightLowerの8ch（ch7-10, 12-15）を追加。空きチャンネル集計を再計算（PCA9685 #1は空きゼロに） |
-| `docs/L/servo_assignment_L2.md` | 対象軸を7軸→11軸へ拡張。候補型番にJX PDI-1109MGを追加し5.0V時トルクを一次情報で確認。SG92R使用の寿命リスクとMG90S×4本の不足を明記 |
+| `docs/L/channel_map_L.md` | L系チャンネル数を7ch→11ch（目8＋首2＋顎1）へ拡張。eyeX/eyeYの「両目左右共通軸」記述を削除し、eyeLeftX／eyeLeftY／eyeRightX／eyeRightY／eyelidLeftUpper／eyelidLeftLower／eyelidRightUpper／eyelidRightLowerの8ch（ch7-10, 12-15）を追加。空きチャンネル集計を再計算（PCA9685 #1は空きゼロに） |
+| `docs/L/servo_assignment_L.md` | 対象軸を7軸→11軸へ拡張。候補型番にJX PDI-1109MGを追加し5.0V時トルクを一次情報で確認。SG92R使用の寿命リスクとMG90S×4本の不足を明記 |
 | `docs/S/power_tree.md` | レールAの2026年実装範囲を4ch→8chへ修正。§6.1電流予算・§6.2稼働時間（定常約6.1時間→約4.7時間）・§7-5 PTC電圧降下を再計算。理論上限電流が2.8A→5.6Aとなり、LM2596の実用2A枠を大きく超えることを明記 |
 | `docs/reference/servo_datasheets.md` | JX PDI-1109MGの諸元を新規追加（一次情報＋小売サイト照合） |
 | `docs/OPEN_ISSUES.md` | #30を「未確認」から「解決済み」へ更新。新規に#31（目サーボ4本の追加調達、影響度高）・#32（左右独立サーボのソフトウェア同期実装、影響度中）・#33（瞼へのSG92R使用可否、影響度中）を追加 |
@@ -56,6 +56,7 @@ L/R/S/M体系への移行時（2026-08-04、コミット1〜7）、L2 InMoov頭�
 ## 変更履歴
 
 - **v1 2026-08-04** 新規作成。目の軸数誤り（4軸→8軸）の訂正記録。
+- **v1.1 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へ更新した（内容の変更はない）。
 
 ## 参照一覧
 
@@ -63,8 +64,8 @@ L/R/S/M体系への移行時（2026-08-04、コミット1〜7）、L2 InMoov頭�
 |---|---|---|
 | InMoov Eyes i2 | https://inmoov.fr/eyes-i2/ | 2026-08-04 |
 | InMoov Head i2 | https://inmoov.fr/headi2/ | 2026-08-04 |
-| `docs/L/channel_map_L2.md` | ローカルリポジトリ内 | 2026-08-04 |
-| `docs/L/servo_assignment_L2.md` | ローカルリポジトリ内 | 2026-08-04 |
+| `docs/L/channel_map_L.md` | ローカルリポジトリ内 | 2026-08-04 |
+| `docs/L/servo_assignment_L.md` | ローカルリポジトリ内 | 2026-08-04 |
 | `docs/S/power_tree.md` | ローカルリポジトリ内 | 2026-08-04 |
 | `docs/reference/servo_datasheets.md` | ローカルリポジトリ内 | 2026-08-04 |
 | `docs/OPEN_ISSUES.md` | ローカルリポジトリ内 | 2026-08-04 |

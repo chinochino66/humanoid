@@ -1,6 +1,6 @@
 # 電源系統図（頭部／スケール100%）— S系
 
-版数: v1.2
+版数: v1.3
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: S（安全・制御・知覚。R系へ再利用可能な記述とする）
@@ -164,9 +164,9 @@ flowchart TB
 
 - レールAを5.8Vにするのは、MG90S級の定格上限6.0Vに対するマージン確保のため
 - **レールBはD36V50F5（5V固定。5.5Aは36V入力時の代表値であり、実際の連続出力電流は入力電圧と熱条件に依存する。出典: Pololu製品ページ、参照一覧参照）を採用。**逆電圧保護・過電流保護・過熱保護・ソフトスタートを内蔵するため、逆接保護をレールB区間に限り解消する
-- **5V動作によるトルク低下（公称6V比で約2割減）は、首サーボ選定時にトルク計算で妥当性を検証すること**（`docs/L/servo_assignment_L2.md` 側で扱う）
+- **5V動作によるトルク低下（公称6V比で約2割減）は、首サーボ選定時にトルク計算で妥当性を検証すること**（`docs/L/servo_assignment_L.md` 側で扱う）
 - 5V-LOGICを遮断しない理由: 非常停止後もログ、状態機械、安全監視を保持するため
-- **レールAの2026年実装範囲はeyeLeftX／eyeLeftY／eyeRightX／eyeRightY／eyelidLeftUpper／eyelidLeftLower／eyelidRightUpper／eyelidRightLowerの8ch（候補JX PDI-1109MG、在庫MG90S×4は4軸分のみで不足）。**`inmoov.fr/eyes-i2/` の一次情報により、目は左右独立の眼球4軸＋瞼4軸＝計8軸と判明した（旧「eyeX/eyeY共通2軸＋瞼2軸」は誤り。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` 参照）。upperLip／cheekRight／cheekLeft／eyebrowRight／eyebrowLeft／foreheadRight／foreheadLeftの7ch（R系軸）は決定2により2027年R5着手時に追加するものであり、現時点の電力予算には含めない。tasteSensorLift（1ch）はS系ベンチ軸として `docs/S/bench_axes_S3S4.md` で扱う。PCA9685 #1（0x40）は16ch全てが割当済みで空きゼロ（`docs/L/channel_map_L2.md` §2参照）
+- **レールAの2026年実装範囲はeyeLeftX／eyeLeftY／eyeRightX／eyeRightY／eyelidLeftUpper／eyelidLeftLower／eyelidRightUpper／eyelidRightLowerの8ch（候補JX PDI-1109MG、在庫MG90S×4は4軸分のみで不足）。**`inmoov.fr/eyes-i2/` の一次情報により、目は左右独立の眼球4軸＋瞼4軸＝計8軸と判明した（旧「eyeX/eyeY共通2軸＋瞼2軸」は誤り。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` 参照）。upperLip／cheekRight／cheekLeft／eyebrowRight／eyebrowLeft／foreheadRight／foreheadLeftの7ch（R系軸）は決定2により2027年R5着手時に追加するものであり、現時点の電力予算には含めない。tasteSensorLift（1ch）はS系ベンチ軸として `docs/S/bench_axes_S3S4.md` で扱う。PCA9685 #1（0x40）は16ch全てが割当済みで空きゼロ（`docs/L/channel_map_L.md` §2参照）
 - PTCの直列抵抗（RXEF250相当、初期値0.05Ω）による電圧降下は §7-5 を参照
 
 ## 6. 電流予算と稼働時間（a）
@@ -446,6 +446,7 @@ PTCの直列抵抗による電圧降下：
 - v0.1 2026-07-29（旧文書） E-STOPを12V母線直後へ移動しポンプ系を遮断下流へ。待機状態を定義
 - v0 2026-07-28（旧文書） 初版
 - **v1.2 2026-08-06** §11の買い足しリストのうちPCA9685×2・D36V50F5×1を調達済みとして打ち消し線で処理し（部品表 In stock確認）、基板温度センサーの調達を新規項目として追加した。§5・§6.1のD36V50F5定格表記（5.5A）に、5.5Aが36V入力時の代表値であり実際の連続出力電流は入力電圧・熱条件に依存する旨の条件を付記した（Pololu公式の記載に基づく）。
+- **v1.3 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へ更新した（内容の変更はない）。
 
 ## 参照一覧
 
