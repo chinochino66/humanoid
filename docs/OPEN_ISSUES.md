@@ -1,6 +1,6 @@
 # 未確認事項一覧
 
-版数: v1.10
+版数: v1.11
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 系統非依存（全系統の未確認事項を横断的に管理する）
@@ -23,13 +23,13 @@
 | 6 | 首サーボ（HS-805BB×2）の5V時トルク実測 | 高 | 線形補間値（約20.6kg·cm）のみで、選定条件（20kg·cm以上）を僅差で満たす判定。実測ではない | 発注前に実機トルク計測、または5.0V時の値をメーカーへ確認 | 首サーボ発注前 | `docs/L/servo_assignment_L.md` |
 | 30 | 【解決済み・2026-08-04】目の軸数・型番の確認 | 高 | `inmoov.fr/eyes-i2/`（取得日2026-08-04）の一次情報により確定。**目は眼球4軸＋瞼4軸＝計8軸（左右独立、ソフトウェア同期）、公式指定サーボはJX PDI-1109MG。**旧「eyeX/eyeY共通2軸＋瞼2軸（MG90S）」は誤りだった。`docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md`・`docs/S/power_tree.md` §6.1を再計算済み。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` を参照 | 解決済み（軸数・型番の確定）。残る作業は#31〜#33を参照 | 解決日: 2026-08-04 | `docs/L/channel_map_L.md`、`docs/L/servo_assignment_L.md`、`docs/S/power_tree.md` §6.1 |
 | 31 | 目サーボ4本の追加調達（MG90S×4では8軸に不足） | 高 | 目・瞼は8軸確定（#30）。在庫MG90S×4本では4軸分しか賄えず、残り4軸分が不足する。公式指定JX PDI-1109MGを新規発注する場合は8本、在庫MG90Sを併用する場合は追加4本の発注が必要 | 発注方針（JX PDI-1109MG統一かMG90S併用か）を決定し、必要数を発注する | L4実装前（手順書のL-Phase 2は首回転のみ。目はL-Phase 4） | `docs/L/servo_assignment_L.md` §2.1、`docs/L/channel_map_L.md` §1 |
-| 38 | L0/L1成果物7件がリポジトリ未収録 | 高 | 手順書はL0・L1を完了済みとするが、成果物（Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1／ServoCenter.ino／servo_pin_map.csv／L1_clearance_check.md）がリポジトリに1件も存在しない。手順書のL-Phase 2開始条件が「Calibrator_Result_v1 の採用値がある」であるため、L2の開始条件を文書上満たせていない。#28（CALIBRATOR比較の詳細記録の所在確認）と同根の問題 | ローカル環境で7件の所在を確認し、存在するものをコミットする。存在しないものは「記録なし」を確定させ、再取得の要否を判断する | L2完了ゲート前 | `docs/README.md`、`docs/L/failure_log/scale_94.md` |
+| 38 | L0/L1成果物7件がリポジトリ未収録 | 高 | 手順書はL0・L1を完了済みとするが、成果物（Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1／ServoCenter.ino／servo_pin_map.csv／L1_clearance_check.md）がリポジトリに1件も存在しない。手順書のL-Phase 2開始条件が「Calibrator_Result_v1 の採用値がある」であるため、L2の開始条件を文書上満たせていない。#28（CALIBRATOR比較の詳細記録の所在確認）と同根の問題。2026-08-06、ServoCenter.ino と servo_pin_map.csv を現行設計（PCA9685×2構成）に合わせて再作成し firmware/ へ収録した。ただしこれらはL1当時の原本ではなく実機未検証であるため、L-Phase 1 の完了記録としない。本項目は未解決のまま継続する。残る未収録: Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1（#28で記録なしを確定）／L1_clearance_check.md | ローカル環境で7件の所在を確認し、存在するものをコミットする。存在しないものは「記録なし」を確定させ、再取得の要否を判断する | L2完了ゲート前 | `docs/README.md`、`docs/L/failure_log/scale_94.md` |
 
 ## 影響度：中
 
 | # | 項目 | 影響度 | 現状 | 確認方法 | 期限 | 解決時に更新する文書 |
 |---|---|---|---|---|---|---|
-| 7 | PCA9685のAll Callアドレス2枚重複の扱い | 中 | 両基板とも工場出荷時デフォルトで0x70（All Call）に同時応答する状態。無効化コード未実装 | Mega初期化時に両基板のMODE1レジスタALLCALLビットを無効化するコードを実装 | 未定 | `docs/S/i2c_address_map.md` |
+| 7 | PCA9685のAll Callアドレス2枚重複の扱い | 中 | **実装済み・実機未検証。**2026-08-06、firmware/ServoCenter.ino の setup() 内で両基板のMODE1レジスタALLCALLビットを0に書き込む処理を実装した（disableAllCall関数）。ただし実機での動作確認は未実施であり、無効化の成否は未検証。ServoCenter.ino は起動時に無効化の成否をシリアルへ出力し、i コマンドのI2Cスキャンで0x70が応答しないことを確認できる。 | 実機でServoCenter.inoを起動し、iコマンドのI2Cスキャンで0x70が検出されないことを確認する | 未定 | `docs/S/i2c_address_map.md`、`firmware/ServoCenter.ino` |
 | 8 | プリチャージ回路の実装方式・BMS型式・主電源SWのinrush定格確認 | 中 | 「未使用」から「使用する」方針へ変更したが、回路（案a/案b）・BMS型式・主電源SWの定格のいずれも未確定・未実測 | BMS型式選定後にOCP/SCP閾値・応答時間を確認、主電源SWのデータシートでinrush/make定格を確認、プリチャージ回路を実装・実測 | 電源系実装前 | `docs/S/power_tree.md` |
 | 9 | PTCの保護協調の整理 | 中 | 未整理。**目の8軸化により、レールAの理論上限電流（8軸同時ストール）が2.8A→5.6Aとなり、PTCのトリップ電流5.0Aを初めて上回った**（4ch想定時はトリップ電流を下回っておりPTCはそもそもトリップし得なかった）。ただしトリップ時間は最大故障電流でも最大15.6秒であり、LM2596の破壊域に対してあまりに遅いため、**「PTCはレギュレータ自体を保護しない」という結論は不変**（`docs/S/power_tree.md` §7-5(a)）。トリップ電流がレギュレータ実用電流を上回る、高温側で保持電流が低下する等、残る3点も未解決のまま | 頭部内想定周囲温度を定義し実効保持電流を再計算。電圧降下を各レール予算へ算入 | 未定 | `docs/S/power_tree.md` |
 | 10 | レールAの同時ストール軸数制限（最大2軸まで）のソフト実装・実測 | 中 | 未実装。8軸同時ストールの理論上限（5.6A）はLM2596の実用2A枠を約2.8倍超える。旧記載「4軸／2.8A」は目の軸数訂正（#30）が未反映だったため2026-08-06に修正（#9・`docs/S/power_tree.md` §6.1 と一致させた） | ファームウェアで同時駆動数を制限し、実測で検証 | 未定 | `docs/S/power_tree.md`、`docs/L/channel_map_L.md` |
@@ -60,8 +60,8 @@
 | 24 | Sub-callアドレスの基板ごとの割当方針 | 低 | 未使用（工場出荷時デフォルトで無効）。将来使用時に基板間の重複回避が必要 | 使用開始時に基板ごとに異なるSUBADR値を割り当てる | 未定 | `docs/S/i2c_address_map.md` |
 | 25 | CAN／RS-485トランシーバの選定（ECI-v1） | 低 | 未定 | 候補比較・選定 | 未定 | `docs/S/mcu_pinmap.md` |
 | 26 | MG90S外形寸法の公式図面再確認 | 低 | 複数ソース間で寸法値に差異あり（22.8×12.2×28.5mm採用、公式図面での再確認は未実施） | TowerPro公式図面の直接確認 | 未定 | `docs/reference/servo_datasheets.md` |
-| 27 | 94%スケールで作成されたBlenderモデルが100%へ更新済みか | 低 | 移行元文書からは確認できない。確認の結果94%のまま残っている部品が見つかった場合は、`docs/L/failure_log/scale_94.md` §5（手順書1.2、混在部品の扱い）の運用規則を適用する | 現行3Dモデルのスケールを確認。混在が見つかった場合は`docs/L/failure_log/scale_94.md` §5に従い対応する | 未定 | `docs/L/failure_log/scale_94.md` §5 |
-| 28 | CALIBRATOR比較の詳細記録の所在確認 | 低 | 記録の有無不明。名称のみが旧文書に残る | 旧資料を捜索し、無ければ「記録なし」を確定させる | 未定 | `docs/L/failure_log/scale_94.md` |
+| 27 | 94%スケールで作成されたBlenderモデルが100%へ更新済みか | 低 | 移行元文書からは確認できない。確認の結果94%のまま残っている部品が見つかった場合は、`docs/L/failure_log/scale_94.md` §5（手順書1.2、混在部品の扱い）の運用規則を適用する | 現行3Dモデルのスケールを確認。混在が見つかった場合は`docs/L/failure_log/scale_94.md` §5に従い対応する。印刷済み部品については `docs/L/print_record_L.md` §2・§3 の記録作業と併せて確認する | 未定 | `docs/L/failure_log/scale_94.md` §5 |
+| 28 | 【解決済み・2026-08-06】CALIBRATOR比較の詳細記録の所在確認 | 低 | 旧資料を捜索したが、CALIBRATOR比較の詳細記録は存在しないことを確定した。CALIBRATOR現物も紛失。再印刷は行わない。再印刷して測り直しても新規測定値が得られるだけで、2026年7月の判断根拠を復元しないため。代替として、印刷済み実部品の実測記録を `docs/L/print_record_L.md` §3 で作成する。採用スケール100%という結論自体は、現行の印刷部品が嵌合している事実により実地で裏付けられている。 | 旧資料を捜索し、無ければ「記録なし」を確定させる | 解決日: 2026-08-06 | `docs/L/failure_log/scale_94.md`、`docs/L/print_record_L.md` |
 | 29 | AIコンピュータ搭載後の稼働時間再計算・電源変換効率の実測 | 低 | AIコンピュータ未実装。効率値（η_A≈0.80、η_B≈0.90等）はデータシート代表値・線形補間であり未実測 | AIコンピュータ選定後に実機で稼働時間・変換効率を実測し再計算 | 第1層実装時 | `docs/S/power_tree.md` |
 
 ---
@@ -80,6 +80,7 @@
 - **v1.8 2026-08-06** 手順書§1.5改訂に伴い、#34〜#37の現状列の版数表記を「Version 2.0（2026-08-03）」から「Version 2.1（2026-08-06）」へ更新した。
 - **v1.9 2026-08-06** #13（MG92B予備2個の配分方針決定）を解決済みとした。案(a)（在庫5個をR系3軸＋S系ベンチ2軸へ配分し、R系は予備なし）を正式採用し、項目名に「【解決済み・2026-08-06】」を付した。
 - **v1.10 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へ更新した（内容の変更はない）。
+- **v1.11 2026-08-06** #28（CALIBRATOR比較の詳細記録の所在確認）を解決済みとした（記録は存在しないことを確定。代替として `docs/L/print_record_L.md` §3 で実測記録を作成する方針）。#7（PCA9685のAll Callアドレス2枚重複）を実装済み・実機未検証とした（`firmware/ServoCenter.ino` にdisableAllCall関数を実装）。#38（L0/L1成果物7件がリポジトリ未収録）の現状にServoCenter.ino／servo_pin_map.csv再作成版のfirmware/収録を追記（未解決のまま継続）。#27（94%スケールのBlenderモデル確認）の確認方法へ `docs/L/print_record_L.md` との併用を追記。件数に変更なし（計38件・高9件・中15件・低14件）。
 
 ## 参照一覧
 

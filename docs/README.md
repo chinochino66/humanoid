@@ -1,6 +1,6 @@
 # docs
 
-版数: v1.5
+版数: v1.6
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 全系統共通（メタ文書）
@@ -12,6 +12,7 @@
 - **v1.3 2026-08-06** 「手順書成果物名との対応」テーブルへL0/L1成果物7件を追加し、いずれも「リポジトリ未収録」（`docs/OPEN_ISSUES.md` #38）と明記。テーブル直後の注記へ、L0/L1成果物未収録によりL2開始条件が文書上満たせていない旨の段落を追加した。
 - **v1.4 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へリネームしたのに伴い、ディレクトリ構成表を更新した。「文書の命名規則」セクションを新設し、設計文書（フェーズ番号を付けない）と記録文書（フェーズ番号を付ける）の区別を明記した。
 - **v1.5 2026-08-06** 手順書§1.5改訂に伴い、「手順書成果物名との対応」冒頭の準拠文書行と参照一覧の該当行を「Version 2.0（2026-08-03）」から「Version 2.1（2026-08-06）」へ更新した（取得日も2026-08-06へ）。
+- **v1.6 2026-08-06** `firmware/`（README.md／ServoCenter.ino／servo_pin_map.csv 再作成版）・`docs/L/print_record_L.md`・`cad/README.md`・`media/README.md` をディレクトリ構成表へ追加した。「手順書成果物名との対応」テーブルのServoCenter.ino／servo_pin_map.csv／L2_PartsScale_Record_v1の対応文書列を更新した（#38、#36）。
 
 ## 体系概要 L/R/S/M
 
@@ -46,6 +47,14 @@ docs/
     mcu_pinmap.md                  Arduino Megaピン表全体
   reference/                        系統非依存の仕様表
     servo_datasheets.md            サーボ諸元表（軸割当を含まない、メーカー一次情報で確認済み）
+firmware/
+  README.md                        収録物の状態と注意（再作成版である旨）
+  ServoCenter.ino                  サーボ中央出し・可動域確認治具（再作成版・実機未検証）
+  servo_pin_map.csv                PCA9685チャンネルと軸の対応表（再作成版・実測値未記入）
+docs/L/
+  print_record_L.md                印刷部品の台帳とスケール記録・実測記録
+cad/README.md                      3MF・gcode・STLの保存規則
+media/README.md                    写真・動画の保存規則
 ```
 
 ## 文書の命名規則
@@ -90,15 +99,15 @@ M系（実咀嚼・搬送・洗浄・排出、2034年以降）はR系頭部へ�
 | L0_WetDry_ServiceRoute_Map_v1 | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
 | Phase0_Handover_Record_v1 | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
 | Calibrator_Result_v1 | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
-| ServoCenter.ino | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
-| servo_pin_map.csv | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
+| ServoCenter.ino | `firmware/ServoCenter.ino`（**再作成版・実機未検証。L1の原本ではない。#38**） |
+| servo_pin_map.csv | `firmware/servo_pin_map.csv`（**再作成版・実測値未記入。L1の原本ではない。#38**） |
 | L1_clearance_check.md | **リポジトリ未収録**（ローカルに存在するか要確認。`docs/OPEN_ISSUES.md` #38） |
 | S_PowerArchitecture_v1 | `docs/S/power_tree.md` |
 | S_HeadBus_Pinout_v1 | `docs/S/mcu_pinmap.md` |
 | S_IndependentSafetyController_v1 | `docs/S/safety_logic.md`（要求のみ。実装未選定） |
 | S_PowerCut_TestReport_v1 | 未作成（実機試験後） |
 | L_NeckRotate_Baseline_v1 | 未作成（L2実機試験の記録） |
-| L2_PartsScale_Record_v1 | 未作成 |
+| L2_PartsScale_Record_v1 | `docs/L/print_record_L.md`（作成中。実測値・3MF・写真の収集が未完了。#36） |
 | L2_Wiring_and_Stop_Test_v1 | 未作成 |
 
 **未作成の4件（S_PowerCut_TestReport_v1／L_NeckRotate_Baseline_v1／L2_PartsScale_Record_v1／L2_Wiring_and_Stop_Test_v1）は、L2完了ゲートに必要な成果物であるため `docs/OPEN_ISSUES.md` へ影響度「中」で登録済み（#34〜#37）。**
