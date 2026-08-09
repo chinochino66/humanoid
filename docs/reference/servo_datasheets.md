@@ -1,12 +1,13 @@
 # サーボ諸元表
 
-版数: v1.1
+版数: v1.2
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 系統非依存（参照専用の仕様表。軸割当・系統タグはここには書かない）
 変更履歴:
 - v1 2026-08-04 旧H-Phase体系文書 `docs/archive/2026-08-03_servo_comparison_hphase.md` から、軸割当を含まない純粋な仕様表として新規分離。全数値をメーカー公式ページまたは特定リスティングの一次情報で再確認し、出典URL・取得日を付した。データシートに5.0V欄が無い機種は4.8V/6.0V（または5.0V/6.8V）からの線形補間であることを明記した。
   - JX PDI-1109MGを追加。InMoov公式 `inmoov.fr/eyes-i2/` の指定サーボであることを一次情報で確認（`docs/decisions/2026-08-04_eye_axis_count_correction.md` 参照）。
+- v1.2 2026-08-06 HS-805BBの項目へ外形実寸（65.6×29.6mm、myminifactoryのコミュニティ情報。公式チュートリアル記載値66×30×57.6mmとは別記）を追記し、NeckServoHolderV2ポケット実測値（65.7/29.3、2026-08-06）との整合を記録した。JX PDI-6221MG（顎駆動、InMoov公式i2Head指定）を新規追加。トルク・速度・電流・パルス仕様は未確認のまま登録した。
 
 **本書の位置づけ**：この文書は各サーボ型番の仕様のみを扱う。どの軸にどのサーボを割り当てるかは `docs/L/servo_assignment_L.md`（L系）・`docs/R/reserved_axes.md`（R系・在庫紐付けのみ）・`docs/S/bench_axes_S3S4.md`（S系）を参照すること。
 
@@ -28,6 +29,25 @@
 | DS3218MG | ANNIMOS（DS3218系OEM品。ベンダーにより仕様表記が異なる。下記は当該リスティングの記載値） | 出典により4.8–7.2V／5–6.8V等の表記差あり | 金属（フルメタルギア、防水） | 40×20×40.5mm | 60g | https://www.amazon.com/DS3218-Digital-Servo-Torque-Waterproof/dp/B07TKTQ2NZ | 2026-08-04 |
 | HS-805BB | Hitec | 4.8–6.0V | ギアはナイロン、モータはカーボンブラシ | 66×30×57.6mm | 152g（5.36oz） | 一次PDF: https://www.hiteccs.com/public/uploads/data_sheet/HS-805BB-DataSheet-1642819052.pdf（機械抽出不可）／小売サイト記載値で代用: https://www.robotshop.com/products/hs-805bb-giant-scale-servo-motor | 2026-08-04 |
 | JX PDI-1109MG | JX Servo | 4.8–6.0V | 金属（20T） | 23.2×12.0×24.8mm | 10g | https://inmoov.fr/eyes-i2/（InMoov公式指定。「4 servos JX PDI 1109MG」「avoid using cheap SG90, they won't last long」と明記）／数値照合: https://hobbyking.com/en_us/jx-pdi-1109mg-metal-gear-digital-micro-servo-2-5kg-0-10sec-10g.html | 2026-08-04 |
+| JX PDI-6221MG | 未確認 | 未確認 | 未確認 | 未確認 | 未確認 | InMoov公式 i2Head チュートリアル（顎駆動サーボとして指定。動作角180°の記載あり） https://inmoov.fr/headi2/ | 2026-08-06 |
+
+**HS-805BB 外形寸法の実寸との照合**
+
+- 外形寸法（公式チュートリアル記載）: 66 × 30 × 57.6 mm
+- 外形寸法（実寸）: 65.6 × 29.6 mm
+  出典: myminifactory「InMoov Neck Servo Adaptor」(Brian Stott) の記述
+  「HS805BB servo motors of dimension - 29.6mm X 65.6mm」
+  **注記: 公式一次情報ではなくコミュニティ情報である。**
+  ただし NeckServoHolderV2 のポケット実測値（65.7 / 29.3、2026-08-06）と整合しており、
+  設計上の想定サーボがHS-805BBであることの裏付けとなる（`docs/L/print_record_L.md` §3）。
+  Hitec公式データシートによる寸法の確認は未実施。
+
+**JX PDI-6221MGについて**
+
+InMoov公式 i2Head チュートリアルにより、顎駆動（公式指定）および首回転の小型サーボ代替
+（ServoAdapter/ServoHornAdapter併用時）に用いられることが判明した。
+出典: InMoov公式 i2Head チュートリアル（inmoov.fr/headi2/）。
+トルク・速度・電圧特性・電流・パルス仕様は未確認（下表参照）。
 
 ## 2. トルク・速度
 
@@ -40,6 +60,7 @@
 | DS3218MG | 未確認（当該リスティングに記載なし） | 19kg·cm（当該リスティング記載） | 約20.4kg·cm（5.0V/6.8V記載値間の線形補間、未実測。アンカー電圧が5.0V・6.8Vであり4.8V/6.0Vの慣例と異なる点に注意） | 未確認（当該リスティングに速度記載なし） | 未実測 |
 | HS-805BB | 19.8kg·cm（公式値、小売サイト記載） | 約20.6kg·cm（4.8V/6.0V公式値間の線形補間、未実測。`docs/archive/2026-08-03_servo_comparison_hphase.md` の「5V時に約20kg·cm相当」という記述と整合） | 24.7kg·cm（公式値、小売サイト記載） | 0.19s/60°@4.8V／0.14s/60°@6.0V | 未実測 |
 | JX PDI-1109MG | 2.2kg·cm（複数リテール一致値） | 約2.25kg·cm（4.8V/6.0V値間の線形補間、未実測） | 2.5kg·cm（複数リテール一致値） | 0.12s/60°@4.8V／0.10s/60°@6.0V | 未実測 |
+| JX PDI-6221MG | 未確認 | 未確認 | 未確認 | 未確認 | 未実測 |
 
 ## 3. 電流
 
@@ -52,6 +73,7 @@
 | DS3218MG | 4mA@5.0V（当該リスティング記載） | 未確認（無負荷回転時の電流記載なし） | 1.5A@5.0V／1.8A@6.8V（当該リスティング記載） | 未実測 |
 | HS-805BB | 8.0mA（待機、小売サイト記載。Hitec公式PDFは機械抽出不可のため未検証） | 700mA（無負荷回転時、同上） | 未確認（メーカー非公表。`docs/archive/2026-08-03_servo_comparison_hphase.md` に25kg級目安2.5〜3A@6Vの記載はあるが型番固有値ではない） | 未実測 |
 | JX PDI-1109MG | 未確認（inmoov.fr／小売サイトとも電流記載なし） | 未確認 | 未確認（micro級目安0.7A@6Vの一般値はあるが型番固有値ではない） | 未実測 |
+| JX PDI-6221MG | 未確認 | 未確認 | 未確認 | 未実測 |
 
 ## 4. パルス仕様
 
@@ -64,6 +86,7 @@
 | DS3218MG | 未確認 | 未確認 | 270°（当該リスティング記載） | 未実測 |
 | HS-805BB | 未確認 | 未確認 | 未確認（一般的なアナログサーボの可動域だが型番固有の公式記載は未確認） | 未実測 |
 | JX PDI-1109MG | 未確認 | 未確認 | 未確認（一般的なマイクロデジタルサーボの可動域だが型番固有の公式記載は未確認） | 未実測 |
+| JX PDI-6221MG | 未確認 | 未確認 | 180°（InMoov公式 i2Head チュートリアル記載） | 未実測 |
 
 **パルス幅範囲・周期が「未確認」の型番が多い理由**：多くの安価なアナログ/デジタルRCサーボは、メーカー公式ページに標準的なPWM値（目安 500〜2400µs、周期20ms）を明記しない。業界慣習として広く使われる値であっても、当該型番のデータシートに明記が無い限り本書では「未確認」として扱う。PCA9685のパルス値は実測で較正すること（`docs/L/channel_map_L.md` 側で扱う）。
 
@@ -73,6 +96,7 @@
 
 - **v1 2026-08-04** 旧H-Phase体系文書から軸割当を含まない仕様表として新規分離。数値をメーカー公式ページ・リスティングの一次情報で再確認。
 - **v1.1 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へ更新した（内容の変更はない）。
+- **v1.2 2026-08-06** HS-805BBへ外形実寸（65.6×29.6mm、myminifactoryのコミュニティ情報）を追記し、NeckServoHolderV2ポケット実測（2026-08-06、`docs/L/print_record_L.md` §3）との整合を記録した。JX PDI-6221MG（InMoov公式i2Head指定の顎駆動サーボ、動作角180°）を新規追加。トルク・速度・電流・パルス幅は未確認。
 
 ## 参照一覧
 
@@ -87,4 +111,6 @@
 | Hitec HS-805BB 記載仕様（小売サイト、上記PDF未検証分の代用） | https://www.robotshop.com/products/hs-805bb-giant-scale-servo-motor | 2026-08-04 |
 | InMoov Eyes i2（JX PDI-1109MG指定、SG90級非推奨の警告） | https://inmoov.fr/eyes-i2/ | 2026-08-04 |
 | JX PDI-1109MG 記載仕様（小売サイト、トルク・速度・寸法の照合用） | https://hobbyking.com/en_us/jx-pdi-1109mg-metal-gear-digital-micro-servo-2-5kg-0-10sec-10g.html | 2026-08-04 |
+| InMoov Head i2（顎駆動サーボ JX PDI-6221MG・動作角180°の指定根拠） | https://inmoov.fr/headi2/ | 2026-08-06 |
+| myminifactory「InMoov Neck Servo Adaptor」(Brian Stott)（HS-805BB実寸65.6×29.6mmの記載。※公式一次情報ではなくコミュニティ情報） | ローカル参照（URL未取得、記述内容のみタスク指示より転記） | 2026-08-06 |
 | 旧文書 `docs/archive/2026-08-03_servo_comparison_hphase.md` | ローカルリポジトリ内 | 2026-08-03 |

@@ -89,6 +89,7 @@ L2の対象は公式InMoov頭部の軸のみとする。表情軸（R系、2027�
 |---|---|
 | トルク余裕率 | ＿＿（L3で頭部質量・重心実測、首の回転軸から重心までの距離を確定後に記入。`docs/OPEN_ISSUES.md` の「頭部質量・重心の実測」を参照） |
 | ホルダ整合 | ＿＿（NeckServoHolderV2 / SkullServoFixV5の実寸とサーボ外形の照合をL3で行う） |
+| 備考 | ポケット実測によりHS-805BBで確定（2026-08-06、`docs/L/print_record_L.md` §3）。首回転はServoAdapter/ServoHornAdapterを追加印刷すればJX PDI-6221MGでも代替可能（公式i2Headチュートリアル記載）。現時点ではHS-805BBを採用する。 |
 
 ## 3. 首サーボ保留解除の記録（決定1）
 
@@ -116,7 +117,7 @@ L2の対象は公式InMoov頭部の軸のみとする。表情軸（R系、2027�
 - [ ] jaw候補（MG996R／DS3218MG）の最終決定。§2.2の通り5.0V時トルクの余裕を優先するならDS3218MGが有力
 - [ ] neckRotate／neckUpDownの5V時トルク実測（発注前に可能であれば）
 - [ ] 頭部質量・重心の実測（`docs/OPEN_ISSUES.md` 登録）
-- [ ] NeckServoHolderV2 / SkullServoFixV5の実寸とサーボ外形の照合
+- [ ] NeckServoHolderV2 / SkullServoFixV5の実寸とサーボ外形の照合（実測は完了、-0.3mmの対策が未実施。`docs/OPEN_ISSUES.md` #12）
 - [ ] 目・瞼8軸（JX PDI-1109MG候補）の5V時トルク実測（補間値からの乖離確認）
 - [ ] 目サーボ4本の追加調達（在庫MG90S×4では8軸に不足。`docs/OPEN_ISSUES.md` #31）
 - [ ] 左右独立サーボのソフトウェア同期の実装（`docs/OPEN_ISSUES.md` #32）
