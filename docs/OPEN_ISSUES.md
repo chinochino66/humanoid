@@ -1,6 +1,6 @@
 # 未確認事項一覧
 
-版数: v1.11
+版数: v1.12
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 系統非依存（全系統の未確認事項を横断的に管理する）
@@ -20,7 +20,7 @@
 | 3 | 12V母線の逆接保護 | 高 | 未解決。候補2案（理想ダイオードコントローラ／ショットキーダイオード）を提示済みだが未実装 | いずれかの方式を選定し実装。損失・発熱を評価 | 未定 | `docs/S/power_tree.md` |
 | 4 | E-STOP後の残留エネルギー放電経路 | 高 | 専用の放電（ブリーダ）抵抗が無い設計不備を確認済み。放電時間が接続負荷次第で数ms〜不定 | 放電抵抗の追加要否を検討し、追加する場合は定数を計算・実装 | 未定 | `docs/S/power_tree.md` |
 | 5 | E-STOP遮断シーケンスが第2層（Mega）に依存していないか | 高 | 未確認。依存している場合、Megaのハング中にE-STOP押下後の遮断が正しく実行されない可能性 | 実機配線・回路図の確認 | 未定 | `docs/S/safety_logic.md` |
-| 6 | 首サーボ（HS-805BB×2）の5V時トルク実測 | 高 | 線形補間値（約20.6kg·cm）のみで、選定条件（20kg·cm以上）を僅差で満たす判定。実測ではない | 発注前に実機トルク計測、または5.0V時の値をメーカーへ確認 | 首サーボ発注前 | `docs/L/servo_assignment_L.md` |
+| 6 | 首サーボ（HS-805BB×2）の5V時トルク実測 | 高 | 線形補間値（約20.6kg·cm）のみで、選定条件（20kg·cm以上）を僅差で満たす判定。実測ではない。2026-08-06時点の方針: L系は公式InMoov部品を100%スケールで印刷する学習機であり、形状・質量が公式と同一になるため、公式指定HS-805BBの採用根拠は成立している（決定1）。5V運用時のトルク余裕の検証は、頭部質量の実測（#2）と併せてL3のトルク検証で行う。本項目の未解決を理由にHS-805BBの発注を保留しない。 | 発注前に実機トルク計測、または5.0V時の値をメーカーへ確認 | 首サーボ発注前 | `docs/L/servo_assignment_L.md` |
 | 30 | 【解決済み・2026-08-04】目の軸数・型番の確認 | 高 | `inmoov.fr/eyes-i2/`（取得日2026-08-04）の一次情報により確定。**目は眼球4軸＋瞼4軸＝計8軸（左右独立、ソフトウェア同期）、公式指定サーボはJX PDI-1109MG。**旧「eyeX/eyeY共通2軸＋瞼2軸（MG90S）」は誤りだった。`docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md`・`docs/S/power_tree.md` §6.1を再計算済み。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` を参照 | 解決済み（軸数・型番の確定）。残る作業は#31〜#33を参照 | 解決日: 2026-08-04 | `docs/L/channel_map_L.md`、`docs/L/servo_assignment_L.md`、`docs/S/power_tree.md` §6.1 |
 | 31 | 目サーボ4本の追加調達（MG90S×4では8軸に不足） | 高 | 目・瞼は8軸確定（#30）。在庫MG90S×4本では4軸分しか賄えず、残り4軸分が不足する。公式指定JX PDI-1109MGを新規発注する場合は8本、在庫MG90Sを併用する場合は追加4本の発注が必要。2026-08-06、公式部品リストにより瞼4軸もJX PDI-1109MGで確定（#33解決）。目8軸すべてを1109MGで統一する。公式頭部全体では1109MG×15本が指定されている。 | 発注方針（JX PDI-1109MG統一かMG90S併用か）を決定し、必要数を発注する | L4実装前（手順書のL-Phase 2は首回転のみ。目はL-Phase 4） | `docs/L/servo_assignment_L.md` §2.1、`docs/L/channel_map_L.md` §1 |
 | 38 | L0/L1成果物7件がリポジトリ未収録 | 高 | 手順書はL0・L1を完了済みとするが、成果物（Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1／ServoCenter.ino／servo_pin_map.csv／L1_clearance_check.md）がリポジトリに1件も存在しない。手順書のL-Phase 2開始条件が「Calibrator_Result_v1 の採用値がある」であるため、L2の開始条件を文書上満たせていない。#28（CALIBRATOR比較の詳細記録の所在確認）と同根の問題。2026-08-06、ServoCenter.ino と servo_pin_map.csv を現行設計（PCA9685×2構成）に合わせて再作成し firmware/ へ収録した。ただしこれらはL1当時の原本ではなく実機未検証であるため、L-Phase 1 の完了記録としない。本項目は未解決のまま継続する。残る未収録: Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1（#28で記録なしを確定）／L1_clearance_check.md | ローカル環境で7件の所在を確認し、存在するものをコミットする。存在しないものは「記録なし」を確定させ、再取得の要否を判断する | L2完了ゲート前 | `docs/README.md`、`docs/L/failure_log/scale_94.md` |
@@ -44,6 +44,8 @@
 | 35 | 手順書成果物 L_NeckRotate_Baseline_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.1（2026-08-06）が定義する首回転ベースライン記録（L2実機試験の記録）が未作成 | L2実機試験を実施し、記録を作成する | L2完了ゲート前 | `docs/README.md`、`docs/L/servo_assignment_L.md` |
 | 36 | 手順書成果物 L2_PartsScale_Record_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.1（2026-08-06）が定義するL2部品スケール記録が未作成 | L2部品のスケール記録を作成する | L2完了ゲート前 | `docs/README.md` |
 | 37 | 手順書成果物 L2_Wiring_and_Stop_Test_v1 未作成 | 中 | 蓮冥頭部 開発手順書 Version 2.1（2026-08-06）が定義するL2配線・停止試験記録が未作成 | L2の配線・E-STOP動作試験を実施し、記録を作成する | L2完了ゲート前 | `docs/README.md`、`docs/S/safety_logic.md` |
+| 39 | 新首機構（New Neck）の公式組立手順が存在しない | 中 | 手順書のL3部品（NeckV3／NeckJointLowerV5／NeckServoHolderV2／NeckServoPivotV2／NeckBoltsV2／ThroatHolderV2／ThroatHoleV3）はInMoovのNew Neck mechanismの部品である。公式Neck and Jawチュートリアルは「Gallery からダウンロード可能だが以下のチュートリアルには示されていない」と明記し、newNeck.mp4 のみを提供している。設計者Gael Langevin自身もInMoov公式Googleグループで新首のファイルはGalleryにあるが組立手順を作る時間がなかったと述べている（コミュニティ情報。公式サイト上の一次記述ではない）。動画にはサーボが映っておらず、使用サーボの公式明示がない。ただし2026-08-06のNeckServoHolderV2ポケット実測（65.7×29.3）がHS-805BB実寸（65.6×29.6）と一致したため、**首上下サーボはHS-805BBであると実測から判断する**（`docs/L/print_record_L.md` §3）。なお首回転側（MainGear／NeckPlateHighV2／ServoGear／GearHolder／Ring／SkullServoFixV5）は公式i2Headチュートリアルに手順が記載されており、L2の実施に支障はない。 | L3組立時に実機で検証し、判明した手順を `docs/L/` へ独自の組立記録として文書化する | L3着手前 | `docs/L/print_record_L.md`、L3関連文書 |
+| 40 | i2Head/Neck組立に必要なネジの不足 | 中 | 公式i2Headチュートリアルから抽出した必要ネジと在庫の照合結果、以下が不足している。M3×20（TopTeeth固定ほか2箇所）、M3×10（Jaw固定4本）、4mm×20（TopSkull上部2本）。在庫があるのはM3×16（未使用24本）および木ネジ詰合せ（M2〜M3、500本）。公式部品リストにはこのほか M3六角ナット6個、M3×14皿ネジ6本、0.8×6mmタッピング6本、4g×6.5mm皿タッピング4本、M3×20を2本の記載があり、在庫との突合が未完了。 | 公式i2Head部品リストと部品表を1件ずつ突合し、不足分をHS-805BBと同時に発注する | L4着手前 | 部品表、`docs/OPEN_ISSUES.md` |
 
 ## 影響度：低
 
@@ -81,6 +83,7 @@
 - **v1.9 2026-08-06** #13（MG92B予備2個の配分方針決定）を解決済みとした。案(a)（在庫5個をR系3軸＋S系ベンチ2軸へ配分し、R系は予備なし）を正式採用し、項目名に「【解決済み・2026-08-06】」を付した。
 - **v1.10 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へ更新した（内容の変更はない）。
 - **v1.11 2026-08-06** #28（CALIBRATOR比較の詳細記録の所在確認）を解決済みとした（記録は存在しないことを確定。代替として `docs/L/print_record_L.md` §3 で実測記録を作成する方針）。#7（PCA9685のAll Callアドレス2枚重複）を実装済み・実機未検証とした（`firmware/ServoCenter.ino` にdisableAllCall関数を実装）。#38（L0/L1成果物7件がリポジトリ未収録）の現状にServoCenter.ino／servo_pin_map.csv再作成版のfirmware/収録を追記（未解決のまま継続）。#27（94%スケールのBlenderモデル確認）の確認方法へ `docs/L/print_record_L.md` との併用を追記。件数に変更なし（計38件・高9件・中15件・低14件）。
+- **v1.12 2026-08-06** #12（NeckServoHolderV2／SkullServoFixV5の実寸照合）へNeckServoHolderV2ポケットの実測結果（長辺+0.1mm、短辺-0.3mm）を反映し、確認方法・期限・解決時に更新する文書を更新した（解決はしない）。#33（瞼へのSG92R使用可否）を公式i2Headチュートリアルの部品リストにより解決済みとし、瞼4軸をJX PDI-1109MGで確定した。#31（目サーボ4本の追加調達）へ瞼確定の反映を追記。#6（首サーボ5V時トルク実測）へ発注保留をしない方針を追記。新規項目として#39（新首機構の公式組立手順が存在しない、中）・#40（i2Head/Neck組立に必要なネジの不足、中）を追加した。計40件（高9件・中17件・低14件）。
 
 ## 参照一覧
 
