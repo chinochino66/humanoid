@@ -1,6 +1,6 @@
 # 未確認事項一覧
 
-版数: v1.12
+版数: v1.13
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: 系統非依存（全系統の未確認事項を横断的に管理する）
@@ -24,6 +24,7 @@
 | 30 | 【解決済み・2026-08-04】目の軸数・型番の確認 | 高 | `inmoov.fr/eyes-i2/`（取得日2026-08-04）の一次情報により確定。**目は眼球4軸＋瞼4軸＝計8軸（左右独立、ソフトウェア同期）、公式指定サーボはJX PDI-1109MG。**旧「eyeX/eyeY共通2軸＋瞼2軸（MG90S）」は誤りだった。`docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md`・`docs/S/power_tree.md` §6.1を再計算済み。経緯は `docs/decisions/2026-08-04_eye_axis_count_correction.md` を参照 | 解決済み（軸数・型番の確定）。残る作業は#31〜#33を参照 | 解決日: 2026-08-04 | `docs/L/channel_map_L.md`、`docs/L/servo_assignment_L.md`、`docs/S/power_tree.md` §6.1 |
 | 31 | 目サーボ4本の追加調達（MG90S×4では8軸に不足） | 高 | 目・瞼は8軸確定（#30）。在庫MG90S×4本では4軸分しか賄えず、残り4軸分が不足する。公式指定JX PDI-1109MGを新規発注する場合は8本、在庫MG90Sを併用する場合は追加4本の発注が必要。2026-08-06、公式部品リストにより瞼4軸もJX PDI-1109MGで確定（#33解決）。目8軸すべてを1109MGで統一する。公式頭部全体では1109MG×15本が指定されている。 | 発注方針（JX PDI-1109MG統一かMG90S併用か）を決定し、必要数を発注する | L4実装前（手順書のL-Phase 2は首回転のみ。目はL-Phase 4） | `docs/L/servo_assignment_L.md` §2.1、`docs/L/channel_map_L.md` §1 |
 | 38 | L0/L1成果物7件がリポジトリ未収録 | 高 | 手順書はL0・L1を完了済みとするが、成果物（Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1／ServoCenter.ino／servo_pin_map.csv／L1_clearance_check.md）がリポジトリに1件も存在しない。手順書のL-Phase 2開始条件が「Calibrator_Result_v1 の採用値がある」であるため、L2の開始条件を文書上満たせていない。#28（CALIBRATOR比較の詳細記録の所在確認）と同根の問題。2026-08-06、ServoCenter.ino と servo_pin_map.csv を現行設計（PCA9685×2構成）に合わせて再作成し firmware/ へ収録した。ただしこれらはL1当時の原本ではなく実機未検証であるため、L-Phase 1 の完了記録としない。本項目は未解決のまま継続する。残る未収録: Muzan_L0_WetSystem_Layout_COMPLETE_v1.blend／L0_WetDry_ServiceRoute_Map_v1／Phase0_Handover_Record_v1／Calibrator_Result_v1（#28で記録なしを確定）／L1_clearance_check.md | ローカル環境で7件の所在を確認し、存在するものをコミットする。存在しないものは「記録なし」を確定させ、再取得の要否を判断する | L2完了ゲート前 | `docs/README.md`、`docs/L/failure_log/scale_94.md` |
+| 11 | 顎サーボの選定（公式指定 JX PDI-6221MG） | 高 | 2026-08-06、公式i2Headチュートリアルの精読により、顎サーボの公式指定が**JX PDI-6221MG（180°）**であることが判明した。旧項目名は「jaw候補（MG996R／DS3218MG）の最終決定」であり、DS3218MGが5V時トルクの観点で有力とされていたが、これらは公式指定ではないため候補から外し選定をやり直す。L系は公式部品を100%スケールで印刷する学習機であり、JawPistonのサーボ取付穴が6221MG前提で設計されている可能性が高い。**まずJawPistonV1NoSupportのSTL上の取付穴ピッチと、6221MGの取付穴ピッチを照合すること。**6221MGの5V時トルク・速度は未確認（`docs/reference/servo_datasheets.md`）。なお旧Neck and Jawチュートリアルは顎にHK15298を指定しているが、これは旧ヘッド用でありi2Headでは6221MGに変更されている。 | JawPistonV1NoSupport のSTL取付穴ピッチと JX PDI-6221MG の外形・穴ピッチを照合する。あわせて6221MGの5V時トルクをメーカーまたは販売店へ確認する。 | L3 | `docs/L/servo_assignment_L.md`、`firmware/servo_pin_map.csv` |
 
 ## 影響度：中
 
@@ -33,7 +34,6 @@
 | 8 | プリチャージ回路の実装方式・BMS型式・主電源SWのinrush定格確認 | 中 | 「未使用」から「使用する」方針へ変更したが、回路（案a/案b）・BMS型式・主電源SWの定格のいずれも未確定・未実測 | BMS型式選定後にOCP/SCP閾値・応答時間を確認、主電源SWのデータシートでinrush/make定格を確認、プリチャージ回路を実装・実測 | 電源系実装前 | `docs/S/power_tree.md` |
 | 9 | PTCの保護協調の整理 | 中 | 未整理。**目の8軸化により、レールAの理論上限電流（8軸同時ストール）が2.8A→5.6Aとなり、PTCのトリップ電流5.0Aを初めて上回った**（4ch想定時はトリップ電流を下回っておりPTCはそもそもトリップし得なかった）。ただしトリップ時間は最大故障電流でも最大15.6秒であり、LM2596の破壊域に対してあまりに遅いため、**「PTCはレギュレータ自体を保護しない」という結論は不変**（`docs/S/power_tree.md` §7-5(a)）。トリップ電流がレギュレータ実用電流を上回る、高温側で保持電流が低下する等、残る3点も未解決のまま | 頭部内想定周囲温度を定義し実効保持電流を再計算。電圧降下を各レール予算へ算入 | 未定 | `docs/S/power_tree.md` |
 | 10 | レールAの同時ストール軸数制限（最大2軸まで）のソフト実装・実測 | 中 | 未実装。8軸同時ストールの理論上限（5.6A）はLM2596の実用2A枠を約2.8倍超える。旧記載「4軸／2.8A」は目の軸数訂正（#30）が未反映だったため2026-08-06に修正（#9・`docs/S/power_tree.md` §6.1 と一致させた） | ファームウェアで同時駆動数を制限し、実測で検証 | 未定 | `docs/S/power_tree.md`、`docs/L/channel_map_L.md` |
-| 11 | jaw候補（MG996R／DS3218MG）の最終決定 | 中 | DS3218MGが5V時トルクの観点で有力だが未確定。MG996Rは5V時推定トルクが要求下限を下回る可能性 | 顎モジュールの実荷重確定後、L3で判定 | L3 | `docs/L/servo_assignment_L.md` |
 | 12 | NeckServoHolderV2／SkullServoFixV5の実寸とサーボ外形の照合 | 中 | 2026-08-06にNeckServoHolderV2のサーボポケットを実測。長辺65.7mm（HS-805BB実寸65.6mmに対し+0.1mm）、短辺29.3mm（同29.6mmに対し-0.3mm）。長辺は問題なし。短辺が0.3mm不足しており、このままでは嵌合しない。公式推奨のHorizontal Expansion -0.15（内寸+0.3mm相当）で解消する見込みだが、対策は未実施。SkullServoFixV5はM3×16の貫通を実物で確認済み（公式指定は木ネジ4本）。**照合作業は完了したが、-0.3mmの対策が未実施のため本項目は解決としない。** | Horizontal Expansion -0.15 で NeckServoHolderV2 を再印刷し、ポケット短辺が29.6mm以上になることを実測で確認する。または耐水ペーパー#400で削り、HS-805BB現物が収まることを確認する。 | HS-805BB到着後、L3組立前 | `docs/L/servo_assignment_L.md`、`docs/L/print_record_L.md` |
 | 13 | 【解決済み・2026-08-06】MG92B予備2個の配分方針決定（R系予備 or S系ベンチ軸） | 中 | 2026-08-06に案(a)を正式採用。在庫MG92B×5個を R系3軸（upperLip／cheekRight／cheekLeft）＋S系ベンチ2軸（tasteSensorLift／throatGate）へ配分し、R系の予備は持たない。部品表の記載（高荷重5軸→MG92B×5）と一致する。ただしS系ベンチ2軸は液体を扱う環境で使用するため故障確率が相対的に高く、故障時は再発注（リードタイムを許容）する方針とする。 | 部品表の案(a)前提を正式決定として承認するか、案(b)へ変更し追加調達するかを確認する | 解決日: 2026-08-06 | `docs/R/reserved_axes.md`、`docs/S/bench_axes_S3S4.md` |
 | 14 | 喉ゲートの非通電時閉機構 | 中 | 未決定（ばね等の機構案のみ） | 機構設計・実装。停止シーケンスでの閉動作保証との両立を検討 | 未定 | `docs/S/bench_axes_S3S4.md` |
@@ -84,6 +84,7 @@
 - **v1.10 2026-08-06** `docs/L/channel_map_L2.md`・`docs/L/servo_assignment_L2.md` のリネームに伴い、本書内の相互参照を `docs/L/channel_map_L.md`・`docs/L/servo_assignment_L.md` へ更新した（内容の変更はない）。
 - **v1.11 2026-08-06** #28（CALIBRATOR比較の詳細記録の所在確認）を解決済みとした（記録は存在しないことを確定。代替として `docs/L/print_record_L.md` §3 で実測記録を作成する方針）。#7（PCA9685のAll Callアドレス2枚重複）を実装済み・実機未検証とした（`firmware/ServoCenter.ino` にdisableAllCall関数を実装）。#38（L0/L1成果物7件がリポジトリ未収録）の現状にServoCenter.ino／servo_pin_map.csv再作成版のfirmware/収録を追記（未解決のまま継続）。#27（94%スケールのBlenderモデル確認）の確認方法へ `docs/L/print_record_L.md` との併用を追記。件数に変更なし（計38件・高9件・中15件・低14件）。
 - **v1.12 2026-08-06** #12（NeckServoHolderV2／SkullServoFixV5の実寸照合）へNeckServoHolderV2ポケットの実測結果（長辺+0.1mm、短辺-0.3mm）を反映し、確認方法・期限・解決時に更新する文書を更新した（解決はしない）。#33（瞼へのSG92R使用可否）を公式i2Headチュートリアルの部品リストにより解決済みとし、瞼4軸をJX PDI-1109MGで確定した。#31（目サーボ4本の追加調達）へ瞼確定の反映を追記。#6（首サーボ5V時トルク実測）へ発注保留をしない方針を追記。新規項目として#39（新首機構の公式組立手順が存在しない、中）・#40（i2Head/Neck組立に必要なネジの不足、中）を追加した。計40件（高9件・中17件・低14件）。
+- **v1.13 2026-08-06** #11（jaw候補（MG996R／DS3218MG）の最終決定）を差し替え。公式i2Headチュートリアルの精読により顎サーボの公式指定が JX PDI-6221MG（180°）であることが判明したため、項目名を「顎サーボの選定（公式指定 JX PDI-6221MG）」に変更し、現状・確認方法を更新した。`firmware/servo_pin_map.csv`・`docs/L/channel_map_L.md` に記載済みの「旧候補MG996R/DS3218MGは2026-08-06に却下（#11）」との文書間矛盾を解消した。影響度を中から高へ変更し、影響度「高」テーブル末尾へ移動した（L-Phase 5の設計前提が変わるため）。解決時に更新する文書へ `firmware/servo_pin_map.csv` を追加した。件数を実数で数え直し、計40件（高10件・中16件・低14件）に更新した。
 
 ## 参照一覧
 
