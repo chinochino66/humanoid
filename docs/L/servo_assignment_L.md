@@ -1,6 +1,6 @@
 # L2 InMoov頭部 軸・サーボ割当
 
-版数: v1.4
+版数: v1.5
 改訂日: 2026-08-06
 準拠文書: 器創造計画 2026-2033（改訂基準日 2026-08-03）
 系統タグ: L（InMoov 100%学習機・非商用。L5で凍結）
@@ -86,7 +86,7 @@ L2の対象は公式InMoov頭部の軸のみとする。表情軸（R系、2027�
 |---|---|
 | トルク余裕率 | ＿＿（L3で頭部質量・重心実測、首の回転軸から重心までの距離を確定後に記入。`docs/OPEN_ISSUES.md` の「頭部質量・重心の実測」を参照） |
 | ホルダ整合 | ＿＿（NeckServoHolderV2 / SkullServoFixV5の実寸とサーボ外形の照合をL3で行う） |
-| 備考 | **neckRotate（首回転）:** SkullServoFixV5のポケット実測（65.7×29.3、2026-08-06）がHS-805BB実寸（65.6×29.6）と一致し、公式i2HeadチュートリアルもSkullServoFixとHS-805BBの組み合わせを明記しているため、**HS-805BBで確定**（`docs/L/print_record_L.md` §3）。ServoAdapter/ServoHornAdapterを追加印刷すればJX PDI-6221MGでも代替可能（公式i2Headチュートリアル記載）。 **neckUpDown（首上下）:** **サーボ未確定（2026-08-06）。** 当初HS-805BBで確定としたが撤回した。保持部品 NeckServoHolderV2 の外形は 55.0 × 58.5 × 22.0 mm であり、HS-805BB（65.6 × 29.6 × 57.4 mm）は物理的に収まらない。STL上のポケット内寸を確認して規格を特定する必要がある。`docs/OPEN_ISSUES.md` #39 で継続管理する。 |
+| 備考 | **neckRotate（首回転）／neckUpDown（首上下）共通:** **HS-805BBで確定（2026-08-06）。** 根拠はInMoov公式 Hardware and BOM ページの「2x Hitec HS805BB HEAD (up/down, right/left)」の記載（https://inmoov.fr/default-hardware-map/、取得日2026-08-06）。設計者Gael Langevinのコメント回答（2018-12-30）も「For the Neck and RotHead you need two HS805bb or some PDI-HV2060MG」としている。SkullServoFixV5のポケット実測（65.7×29.3、2026-08-06）がHS-805BB実寸（65.6×29.6）と一致することも裏付けとなる。代替候補：PDI-HV2060MG（公式記載）。首回転についてはServoAdapter/ServoHornAdapterを追加印刷すればJX PDI-6221MGでも代替可能（公式i2Headチュートリアル記載）。 |
 
 ## 3. 首サーボ保留解除の記録（決定1）
 
@@ -129,6 +129,7 @@ L2の対象は公式InMoov頭部の軸のみとする。表情軸（R系、2027�
 - **v1.2 2026-08-06** `docs/L/servo_assignment_L2.md` から `docs/L/servo_assignment_L.md` へリネーム。中身がL2〜L5相当のL系全体の設計表であり、フェーズ番号を名前に含めると工程範囲の誤読を招くため、命名規則に従いフェーズ番号を外した。リポジトリ全体の相互参照リンクを追従させた。
 - **v1.3 2026-08-06** §2.3（首）へNeckServoHolderV2ポケット実測（2026-08-06）によるHS-805BB確定の備考を追加した。公式i2Headチュートリアルの精読により§2.2（顎）の候補をMG996R／DS3218MGからJX PDI-6221MG（公式指定・180°）へ変更した。§2.1（瞼）をJX PDI-1109MG（公式指定・#33解決済み）で確定させ、SG92R充当の却下を明記した。
 - **v1.4 2026-08-06** §2.3（首）の備考を訂正。v1.3のHS-805BB確定根拠は部品名の取り違え（実測したのはNeckServoHolderV2ではなくSkullServoFixV5）だったため、neckRotateとneckUpDownを分けて記述し直した。neckRotateはSkullServoFixV5実測により**HS-805BBで確定**のまま維持。neckUpDownはHS-805BB確定を撤回し**サーボ未確定**へ変更した（NeckServoHolderV2の外形55.0×58.5×22.0mmにHS-805BBが収まらないため。`docs/OPEN_ISSUES.md` #39）。
+- **v1.5 2026-08-06** §2.3（首）の備考を訂正。v1.4のneckUpDown「サーボ未確定」の判断はNeckServoHolderV2.stlに同一形状のL字ブラケットが2個含まれることを見落とした誤りであり、撤回した（1個あたりの外形は約55.0×28.0×22.0mmで厚み22mmはサーボ高さの制約にならない）。InMoov公式 Hardware and BOMページの「2x Hitec HS805BB HEAD (up/down, right/left)」の記載により、neckRotate・neckUpDownとも**HS-805BBで確定**とし、備考をneckRotate／neckUpDown共通の文言へ統一した（`docs/OPEN_ISSUES.md` #39）。
 
 ## 参照一覧
 
